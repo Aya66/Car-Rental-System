@@ -12,7 +12,7 @@ $dbname = "carrentalsystem";
 $fname = $_POST["fname"];   //gets input from user from customer_registeration.php
 $lname = $_POST["lname"];
 $email = $_POST["email"];
-$db = $_POST["db"];
+$db = date('Y-m-d', strtotime($_POST['bd']));
 $gender = $_POST["gender"];
 $country = $_POST["country"];
 $pass = $_POST["pass"];
@@ -29,7 +29,7 @@ if ($result->num_rows > 0){
 	$conn->close();
 }
 
-$sql = "INSERT INTO customer (fname, lname, email, db, gender, country, password) VALUES ('$fname', '$lname', '$email', '$db', '$gender', '$country', '$pass')";  //puts the given data into the db
+$sql = "INSERT INTO customer (first_name, last_name, email, birthdate, gender, country, password) VALUES ('$fname', '$lname', '$email', '$db', '$gender', '$country', '$pass')";  //puts the given data into the db
 
 if ($conn->query($sql) === TRUE) {  //if data is placed in db correctly, sends user to the login page
   header('Location: /Car_rental_system/customer_login.php');
