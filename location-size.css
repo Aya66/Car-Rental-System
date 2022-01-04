@@ -13,8 +13,8 @@ body {
 .center {
   position: absolute;
   top: 50%;
-  left: 700px;
-  transform: translate(0, -50%);
+  right: 50%;
+  transform: translate(50%, -50%);
   padding: 20px;
 }
 .buttons-size {
@@ -33,14 +33,15 @@ body {
   border-radius: 5px;
 }
 .nav-bar {
+  text-align: center;
   width: 100%;
   height: 100px;
 }
 .title-margins {
   margin-top: 0;
   margin-bottom: 0;
-  margin-left: 680px;
-  padding-top: 30px;
+  left: 50%;
+  padding-top: 35px;
 }
 .sign-up-text-margins {
   margin-top: 80px;
@@ -58,13 +59,15 @@ body {
   border-radius: 5px;
 }
 .login-text {
-  margin-left: 630px;
-  margin-bottom: 4px;
+  text-align: center;
 }
 .form-border {
   width: 280px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
   padding: 10px;
-  margin-left: 630px;
+  text-align: center;
   border: 5px solid black;
   border-radius: 5px;
 }
@@ -84,7 +87,8 @@ body {
   height: 50px;
 }
 .error-msg {
-  margin-left: 40%;
+  text-align: center;
+  color: red;
 }
 .center-form {
   width: 280px;
