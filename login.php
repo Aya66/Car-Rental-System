@@ -29,7 +29,9 @@
   if ($conn->connect_error) {        //checks the connection
     die("Connection failed: " . $conn->connect_error);
   }
-  $sql = "SELECT user_id, first_name, last_name, password, email, birthdate, country  FROM user WHERE password='$pass' and email='$email'";
+  $sql = "SELECT user_id, first_name, last_name, password, email, birthdate, country  
+  FROM user 
+  WHERE password='$pass' and email='$email'";
   $result = $conn->query($sql);  //gets the data of the user with the given inputs
 
   if ($result->num_rows > 0) {

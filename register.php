@@ -18,6 +18,7 @@
   $db = date('Y-m-d', strtotime($_POST['bd']));
   $gender = $_POST["gender"];
   $country = $_POST["country"];
+  $city = $_POST["city"];
   $pass = $_POST["pass"];
 
   $conn = new mysqli($servername, $username, $password, $dbname);  // creates the connection
@@ -32,7 +33,8 @@
     $conn->close();
   }
 
-  $sql = "INSERT INTO user (first_name, last_name, email, birthdate, gender, country, password) VALUES ('$fname', '$lname', '$email', '$db', '$gender', '$country', '$pass')";  //puts the given data into the db
+  $sql = "INSERT INTO user (first_name, last_name, email, birthdate, gender, country,  city, password) 
+  VALUES ('$fname', '$lname', '$email', '$db', '$gender', '$country', '$city', '$pass')";  //puts the given data into the db
 
   if ($conn->query($sql) === TRUE) {  // if data is placed in db correctly, sends user to the login page
     header('Location: /car-rental-system/user_login.php');

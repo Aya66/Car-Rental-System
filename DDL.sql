@@ -23,6 +23,7 @@ create table user(
     birthdate DATE not null,
     gender varchar(225),
     country varchar(225) not null,
+    city varchar(225) not null,
     is_admin boolean not null,
     PRIMARY KEY (user_id)
 );

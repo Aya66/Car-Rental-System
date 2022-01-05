@@ -16,6 +16,7 @@
 			var bd = document.getElementById("bd").value;
 			var gender = document.getElementById("gender").value;
 			var country = document.getElementById("country").value;
+			var country = document.getElementById("city").value;
 			var password = document.getElementById("password").value;
 			var confirmPass = document.getElementById("confirmPass").value;
 			if (fname == "") {
@@ -40,6 +41,10 @@
 			}
 			if (country == "") {
 				alert("Must enter country");
+				return false;
+			}
+			if (city == "") {
+				alert("Must enter city");
 				return false;
 			}
 			if (password == "") {
@@ -94,15 +99,15 @@
 				<br>
 				<input type="email" placeholder= "Email" name="email" id="email" class="reg-textbox">
 				<br>
-				<!--make diff type-->
 				<input type="date" placeholder="Birth-date" name="bd" id="bd" class="date-textbox">
-				<!--make diff type-->
 				<label class="font16 white-colour">M</label>
 				<input type="radio" placeholder="Gender" name="gender" id="gender" value = "M" >
 				<label class="font16 white-colour">F</label>
 				<input type="radio" placeholder="Gender" name="gender" id="gender" value = "F" >
 				<br>
 				<input type="text" placeholder="Country" name="country" id="country" class="reg-textbox">
+				<br>
+				<input type="text" placeholder="City" name="city" id="city" class="reg-textbox">
 				<br>
 				<input type="password" placeholder= "Password" name="pass" id="password" class="reg-textbox">
 				<br>
@@ -118,7 +123,7 @@
 				echo "<p class='error-msg font20 white-colour'>" . "Email Already Exists";
 			}
 		?>
-
+		
 		<h2 class="font20 white-colour">Already registered? Login here:
 			<a href="user_login.php"> <button class="white-colour reg-button-size background-colour-button button-homepage radius-5">Login</button> </a>
 		</h2>
