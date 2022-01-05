@@ -36,8 +36,8 @@
   $sql = "INSERT INTO user (first_name, last_name, email, birthdate, gender, country,  city, password) 
   VALUES ('$fname', '$lname', '$email', '$db', '$gender', '$country', '$city', '$pass')";  //puts the given data into the db
 
-  if ($conn->query($sql) === TRUE) {  // if data is placed in db correctly, sends user to the login page
-    header('Location: /car-rental-system/user_login.php');
+  if ($conn->query($sql) === TRUE) {  // if data is placed in db correctly, sends user to the customer page
+    header('Location: /car-rental-system/customer.php');
   }
   else {
     echo "Error: " . $sql . "<br>" . $conn->error;
