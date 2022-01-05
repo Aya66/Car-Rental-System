@@ -25,7 +25,7 @@
         	<h2 class="font26 navbar-third white-colour">Reservations</h2>
 		</a>
 
-		<a href="index.html">
+		<a href="logout.php">
         	<h2 class="font26 logout-margins white-colour">Logout</h2>
 		</a>
     
