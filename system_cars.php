@@ -17,11 +17,11 @@
         	<h2 class="font26 navbar-first white-colour">Cars</h2>
 		</a>
 
-        <a href="system_cars.php">
+        <a href="system_users.php">
         	<h2 class="font26 navbar-second white-colour">Customers</h2>
 		</a>
 
-        <a href="system_cars.php">
+        <a href="system_reservations.php">
         	<h2 class="font26 navbar-third white-colour">Reservations</h2>
 		</a>
 
@@ -138,7 +138,7 @@
 			<br>
 
 			<br>
-			<table class="white-colour font20">
+			<table class="white-colour font20 black-background">
 
 				<tr>
 					<th>plate number</th>
