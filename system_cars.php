@@ -37,9 +37,21 @@
 
 		if (isset($_POST["search"])) {
 			$searchedValModel = $_POST["searchedValModel"];
+			$searchedValBody = $_POST["searchedValBody"];
+			$searchedValBrand = $_POST["searchedValBrand"];
 			$searchedValColor = $_POST["searchedValColor"];
-			$query = "SELECT * FROM car WHERE (CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `office_id`) LIKE '%".$searchedValModel."%'
-			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `office_id`) LIKE '%".$searchedValColor."%')";
+			$searchedValYear = $_POST["searchedValYear"];
+			$searchedValStatus = $_POST["searchedValStatus"];
+			$searchedValOffice = $_POST["searchedValOffice"];
+			$query = "	SELECT *
+						FROM car
+						WHERE CONCAT(`model`) LIKE '%".$searchedValModel."%'
+							AND CONCAT(`body`) LIKE '%".$searchedValBody."%'
+							AND CONCAT(`brand`) LIKE '%".$searchedValBrand."%'
+							AND CONCAT(`color`) LIKE '%".$searchedValColor."%'
+							AND CONCAT(`year`) LIKE '%".$searchedValYear."%'
+							AND CONCAT(`status`) LIKE '%".$searchedValStatus."%'
+							AND CONCAT(`office_id`) LIKE '%".$searchedValOffice."%'";
 			$searchResults = getQueryResults($query);
 		}
 		else {
@@ -124,13 +136,121 @@
 			}
 		}
 
+		$servername = "localhost";
+		$username = "root";
+		$password = "";
+		$dbname = "carrentalsystem";
+		$conn = new mysqli($servername, $username, $password, $dbname);  //creates the connection
+		if ($conn->connect_error) {        //checks the connection
+			die("Connection failed: " . $conn->connect_error);
+		}
+		$sql = "SELECT *
+				FROM car
+				ORDER BY plate_id";
+		$result = $conn->query($sql);  //gets the data of the user with the given inputs
+		$modelArray = array();
+		$bodyArray = array();
+		$brandArray = array();
+		$colorArray = array();
+		$yearArray = array();
+		$statusArray = array();
+		$officeArray = array();
+		if ($result->num_rows > 0) {
+
+			while ($row = $result->fetch_assoc()) {  // check if the data exists
+				$modelArray[] = $row["model"];
+				$bodyArray[] = $row["body"];
+				$brandArray[] = $row["brand"];
+				$colorArray[] = $row["color"];
+				$yearArray[] = $row["year"];
+				$statusArray[] = $row["status"];
+				$officeArray[] = $row["office_id"];
+			}
+			
+		}
+		else {  //if data does not exit, sends error to login page
+			echo "no cars exist";
+		}
+		$modelArray = array_unique($modelArray);
+		$bodyArray = array_unique($bodyArray);
+		$brandArray = array_unique($brandArray);
+		$colorArray = array_unique($colorArray);
+		$yearArray = array_unique($yearArray);
+		$statusArray = array_unique($statusArray);
+		$officeArray = array_unique($officeArray);
+
 		?>
 
 		<form action="system_cars.php" method="POST">
 
 			<br>
-			<input type="text" name="searchedValModel" placeholder="Search here">
-			<input type="text" name="searchedValColor" placeholder="Search here">
+			
+			<label> model:</label>
+						<select name="searchedValModel">
+						<option selected="selected"></option>
+						<?php
+						foreach($modelArray as $item){
+							echo '<option value=' .$item. '>' .$item. '</option>';
+						}
+						?>
+						</select>
+						
+			<label>body:</label>
+						<select name="searchedValBody">
+						<option selected="selected"></option>
+						<?php
+						foreach($bodyArray as $item){
+							echo '<option value=' .$item. '>' .$item. '</option>';
+						}
+						?>		
+						</select>
+						
+			<label>brand:</label>
+						<select name="searchedValBrand">
+						<option selected="selected"></option>
+						<?php
+						foreach($brandArray as $item){
+							echo '<option value=' .$item. '>' .$item. '</option>';
+						}
+						?>		
+						</select>
+			<label>color:</label>
+						<select name="searchedValColor">
+						<option selected="selected"></option>
+						<?php
+						foreach($colorArray as $item){
+							echo '<option value=' .$item. '>' .$item. '</option>';
+						}
+						?>		
+						</select>
+			<label>year:</label>
+						<select name="searchedValYear">
+						<option selected="selected"></option>
+						<?php
+						foreach($yearArray as $item){
+							echo '<option value=' .$item. '>' .$item. '</option>';
+						}
+						?>		
+						</select>
+			<label>status:</label>
+						<select name="searchedValStatus">
+						<option selected="selected"></option>
+						<?php
+						foreach($statusArray as $item){
+							echo '<option value=' .$item. '>' .$item. '</option>';
+						}
+						?>		
+						</select>
+			<label>Office:</label>
+						<select name="searchedValOffice">
+						<option selected="selected"></option>
+						<?php
+						foreach($officeArray as $item){
+							echo '<option value=' .$item. '>' .$item. '</option>';
+						}
+						?>		
+						</select>
+
 			<input type="submit" name="search" value="Filter">
 			<input type="text" name="newPlateID" placeholder="New Car Plate ID">
 			<input type="submit" name="add" value="Add New Car">
@@ -162,11 +282,11 @@
 						<?php
 						echo '<select name="carStatus">';
 						if ($row["status"] == "out_of_service") {
-							echo '	<option value="out_of_service">Out of Service</option>
-									<option value="active">Active</option>';
+							echo '	<option value="active">Active</option>
+									<option value="out_of_service" selected="selected">Out of Service</option>';
 						}
 						else {
-							echo '	<option value="active">Active</option>
+							echo '	<option value="active" selected="selected">Active</option>
 									<option value="out_of_service">Out of Service</option>';
 						}
 						echo '</select>';
