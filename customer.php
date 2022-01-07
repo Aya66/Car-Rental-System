@@ -1,3 +1,34 @@
+<?php
+		if(isset($_POST["search"])){
+			$searchedValModel = $_POST["searchedValModel"];
+			$searchedValColor = $_POST["searchedValColor"];
+			$query = "SELECT `plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city` FROM `car`,`office` WHERE car.office_id = office.office_id AND (CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValModel."%'
+			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValColor."%')";
+			$searchResults = getQueryResults($query);
+		}
+		else{
+			$query ="SELECT C.plate_id, C.model, C.body, C.brand, C.color, C.year, C.status, OF.country, OF.city
+					 FROM car C, office OF
+					 WHERE C.office_id = OF.office_id
+					 ORDER BY C.plate_id";
+			$searchResults = getQueryResults($query);
+			//$conn->close();
+			
+		}
+		function getQueryResults($query){
+			$servername = "localhost";
+			$username = "root";
+			$password = "";
+			$dbname = "carrentalsystem";
+			$conn = mysqli_connect($servername, $username, $password, $dbname);  //creates the connection
+			$filteredResult = mysqli_query($conn,$query);
+			return $filteredResult;
+			
+		}
+
+		?>
+
+
 <html>
 <head>
 
@@ -26,14 +57,44 @@
     </nav>
 	<section class=" white-colour font20 scrollbar">
 
-		<?php
-	
-		$servername = "localhost";
-		$username = "root";
-		$password = "";
-		$dbname = "carrentalsystem";
+		<form action="customer.php" method="POST">
+			<input type="text" name="searchedValModel" placeholder="Search here">
+			<input type="text" name="searchedValColor" placeholder="Search here">
+			<input type="submit" name="search" value="filter">
+		<table>
+			<tr>
+				<th>plate_id</th>
+				<th>model</th>
+				<th>body</th>
+				<th>brand</th>
+				<th>color</th>
+				<th>year</th>
+				<th>status</th>
+				<th>country</th>
+				<th>city</th>
+			</tr>
+			<?php while($row = mysqli_fetch_array($searchResults)):?>
+			<tr>
+				<td><?php echo $row["plate_id"];?></td>
+				<td><?php echo $row["model"];?></td>
+				<td><?php echo $row["body"];?></td>
+				<td><?php echo $row["brand"];?></td>
+				<td><?php echo $row["color"];?></td>
+				<td><?php echo $row["year"];?></td>
+				<td><?php echo $row["status"];?></td>
+				<td><?php echo $row["country"];?></td>
+				<td><?php echo $row["city"];?></td>
+			</tr>
+			<?php endwhile;?>
+		</table>
+		</form>
 
-		$conn = new mysqli($servername, $username, $password, $dbname);  //creates the connection
+
+
+
+
+<!--
+		/*$conn = new mysqli($servername, $username, $password, $dbname);  //creates the connection
 		if ($conn->connect_error) {        //checks the connection
 			die("Connection failed: " . $conn->connect_error);
 		}
@@ -60,25 +121,23 @@
 			//header('Location: /car-rental-system/user_login.php? error=1');
 		}
 		print print_r($modelArray);
-		?>
-
-				
-				 
+		
+		?> 
 				<form method="POST" onsubmit="printFilter()">
 						<label>Choose a car model:</label>
 						<select name="model"  id="filteredModel">
 						<option selected="selected">Choose one</option>
 						<?php
-						foreach($modelArray as $item){
-							echo '<option value=' .$item. '>' .$item. '</option>';
-						}
+						//foreach($modelArray as $item){
+							//echo '<option value=' .$item. '>' .$item. '</option>';
+						//}
 						?>		
 						</select>
 						<input type="submit">
-					   </form>
+					   </form>-->
 			
 		<?php
-		$conn->close();
+		//$conn->close();
 
 		?>
 
