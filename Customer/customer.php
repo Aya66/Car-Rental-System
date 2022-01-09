@@ -38,6 +38,20 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="/Car-Rental-System/Styles/location-size.css">
     <link rel="stylesheet" href="/Car-Rental-System/Styles/fonts.css">
 
+	<script>
+		function emptyValidate() {  //checks if there are any empty fields
+			var duration = document.getElementById("duration").value;
+			if (duration == "") {
+				alert("Must enter a duration");
+				return false;
+			}
+			if (duration <= 0) {
+				alert("Must enter a valid duration time");
+				return false;
+			}
+		}
+	</script>
+
 	<style>
 		#customers {
 		font-family: Arial, Helvetica, sans-serif;
@@ -296,7 +310,7 @@ $result = $conn->query($sql);
 						</select>
 			<label for="duration">  Rent Duration (days)  </label>
 			<input type="text" id="duration" name="duration" class="small-textbox">
-			<input type="submit" value="Reserve" name="chosen" id="reserved">
+			<input type="submit" value="Reserve" name="chosen" id="reserved" onclick="return emptyValidate()">
 		</form>
 		<?php
 		

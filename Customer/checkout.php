@@ -25,6 +25,22 @@ if(isset($_POST["rents"])){
         function success(){
             alert("Payment Successful!");
         }
+		function paymentValidate() {  //validates inputs
+			var pin = document.getElementById("pin").value;
+            var cashCheck = document.getElementById("cash").checked;
+            var creditCheck = document.getElementById("credit").checked;
+            if(cashCheck == false && creditCheck == false) {
+                alert("You must check a payment method");
+                return false;
+            }
+            else if(pin == "" && creditCheck == true){
+                alert("Must enter pin");
+                return false;
+            }
+            else{
+                success();
+            }
+        }
     </script>
     <style>
 		#customers {
@@ -125,17 +141,17 @@ if(isset($_POST["rents"])){
         <br>
         <br>
         <form method="POST" class="form-border">
-            <label>Payment Method</label>
+            <label class="login-text white-colour font30">Payment Method</label>
 			<br>
 			<label class="font16 white-colour">Cash</label>
-            <input type="radio" name="method">
+            <input type="radio" name="method" id="cash">
             <br>
 			<label class="font16 white-colour">Credit Card</label>
-			<input type="radio" name="method">
+			<input type="radio" name="method" id="credit">
 			<br>
-            <input type="password" placeholder="Enter Pin" class="reg-textbox">
+            <input type="password" placeholder="Enter Pin" id="pin" class="reg-textbox">
             <br>
-            <input class="white-colour buttons-size background-colour-button button-homepage radius-5" type="submit" value="Confirm Payment" name="pay" onclick="success()">
+            <input class="white-colour payment-button-size background-colour-button button-homepage radius-5" type="submit" value="Confirm Payment" name="pay" onclick="return paymentValidate()">
         </form>
     </section>
 </body>
