@@ -33,12 +33,13 @@
 </head>
 <body>
     <nav class="nav-bar black-background">
-		<a href="index.html">
-        	<h2 class="font26 navbar-third white-colour">Car Rental System</h2>
-		</a>
-        <a href="logout.php">
+
+        <a href="/Car-Rental-System/logout.php">
         	<h2 class="font26 logout-margins white-colour">Logout</h2>
 		</a>
+
+        <h2 class="font26 title-margins white-colour">Car Rental System</h2>
+
     </nav>
 	<section class=" white-colour font20 scrollbar">
         <?php
