@@ -1,36 +1,24 @@
-<?php
+ <?php
 session_start();
-
+if(isset($_GET['email']) && $_GET['email'] !== ""){
+	$_SESSION['email'] = $_GET['email'];
+}
+$sesEmail = $_SESSION['email'];
+//echo $sesEmail;
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "carrentalsystem";
-$conn = mysqli_connect($servername, $username, $password, $dbname);  //creates the connection
-
-if ( isset($_GET['email']))  
-{
-	$email =  $_GET['email'];
-	//echo $email;
-
-
-$customerID = "SELECT user_id
+$sql = "SELECT user_id
 FROM `user`
-WHERE `user`.email = $email";
-
-
-$result = $conn->query($customerID);  //gets the data of the user with the given inputs
-
+WHERE `user`.email = $sesEmail ";
+$conn = mysqli_connect($servername, $username, $password, $dbname);  //creates the connection
+$result = $conn->query($sql);
 while($row = mysqli_fetch_array($result)){
-	echo "id";
-	echo $row["user_id"]; 
+	//echo $row["user_id"];
 	$id = $row["user_id"];
+	echo $id;
 }
-}
-if( empty($_SESSION['id']) ) {
-	$_SESSION['id'] = $id;
-}
-
-echo $_SESSION['id'];
 ?>
 
 <html>
@@ -296,6 +284,7 @@ echo $_SESSION['id'];
 			<?php endwhile;?>
 		</table>
 		<?php
+		echo $sesEmail;
 		echo $id;
 		}
 		$conn->close();
