@@ -1,0 +1,158 @@
+html,
+body {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: url("/Car-Rental-System/Images/car-home1.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+.center {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  padding: 20px;
+}
+.buttons-size {
+  border: none;
+  padding: 8px 16px 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  width: 100px;
+  height: 80px;
+}
+.radius-5 {
+  border-radius: 5px;
+}
+.nav-bar {
+  text-align: center;
+  width: 100%;
+  height: 100px;
+}
+.item-bar {
+  width: 100%;
+  height: 50px;
+}
+.title-margins {
+  margin-top: 0;
+  margin-bottom: 0;
+  left: 50%;
+  padding-top: 35px;
+}
+.item-margins {
+  padding-top: 15px;
+  padding-left: 20px;
+}
+.logout-margins {
+  position: absolute;
+  margin-top: 0;
+  margin-bottom: 0;
+  right: 40px;
+  padding-top: 35px;
+}
+.navbar-first {
+  position: absolute;
+  margin-top: 0;
+  margin-bottom: 0;
+  left: 40px;
+  padding-top: 35px;
+}
+.navbar-second {
+  position: absolute;
+  margin-top: 0;
+  margin-bottom: 0;
+  left: 120px;
+  padding-top: 35px;
+}
+.navbar-third {
+  position: absolute;
+  margin-top: 0;
+  margin-bottom: 0;
+  left: 260px;
+  padding-top: 35px;
+}
+.sign-up-text-margins {
+  margin-top: 80px;
+  margin-bottom: 0;
+  margin-left: 960px;
+  padding-top: 30px;
+  display: inline-block;
+}
+.text-box {
+  width: 200px;
+  padding: 20px 20px;
+  margin-left: 40px;
+  margin-bottom: 10px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+.login-text {
+  text-align: center;
+}
+.form-border {
+  width: 280px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  padding: 10px;
+  text-align: center;
+  border: 5px solid black;
+  border-radius: 5px;
+}
+.word-margin {
+  margin-left: 100px;
+}
+.reg-button-size {
+  border: none;
+  padding: 8px 16px 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 8px 10px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  width: 100px;
+  height: 50px;
+}
+.error-msg {
+  text-align: center;
+  color: red;
+}
+.center-form {
+  width: 280px;
+  padding: 10px;
+  margin-left: 630px;
+  border-radius: 20px;
+}
+.reg-textbox {
+  width: 100%;
+  padding: 1em;
+  margin-bottom: 10px;
+  line-height: 1.4;
+  border: 1px;
+  border-radius: 3px;
+}
+.date-textbox {
+  width: 50%;
+  padding: 0.5em;
+  margin-bottom: 10px;
+  line-height: 1.4;
+  border: 1px;
+  border-radius: 1.5px;
+}
+.scrollbar {
+  width: 100%;
+  height: 80%;
+  overflow: auto;
+}
+.small-textbox{
+  width: 50px;
+}

@@ -37,7 +37,7 @@
   VALUES ('$fname', '$lname', '$email', '$db', '$gender', '$country', '$city', '$pass')";  //puts the given data into the db
 
   if ($conn->query($sql) === TRUE) {  // if data is placed in db correctly, sends user to the customer page
-    header('Location: /car-rental-system/customer.php');
+    header("Location: /car-rental-system/Customer/customer.php? email= '$email'");
   }
   else {
     echo "Error: " . $sql . "<br>" . $conn->error;

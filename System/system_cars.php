@@ -3,9 +3,13 @@
 
 	<title>Cars</title>
 	<!--Style sheets-->
-	<link rel="stylesheet" href="colours.css">
-    <link rel="stylesheet" href="location-size.css">
-    <link rel="stylesheet" href="fonts.css">
+	<link rel="stylesheet" href="/Car-Rental-System/Styles/colours.css">
+    <link rel="stylesheet" href="/Car-Rental-System/Styles/location-size.css">
+    <link rel="stylesheet" href="/Car-Rental-System/Styles/fonts.css">
+	<!-- Scripts -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery.tabledit.js"></script>
+	<script type="text/javascript" src="custom_table_edit.js"></script>
 
 </head>
 
@@ -25,13 +29,13 @@
         	<h2 class="font26 navbar-third white-colour">Reservations</h2>
 		</a>
 
-		<a href="logout.php">
+		<a href="/Car-Rental-System/logout.php">
         	<h2 class="font26 logout-margins white-colour">Logout</h2>
 		</a>
     
     </nav>
 
-	<section class=" white-colour font20 scrollbar">
+	<section class="white-colour font20 scrollbar">
 
 		<?php
 
@@ -69,25 +73,6 @@
 			$conn = mysqli_connect($servername, $username, $password, $dbname);  //creates the connection
 			$filteredResult = mysqli_query($conn, $query);
 			return $filteredResult;
-		}
-
-		if (isset($_POST["save"])) {
-
-			$servername = "localhost";
-			$username = "root";
-			$password = "";
-			$dbname = "carrentalsystem";
-			// Create connection
-			$conn = new mysqli($servername, $username, $password, $dbname);
-			// Check connection
-			if ($conn->connect_error) {
-				die("Connection failed: " . $conn->connect_error);
-			}
-
-			"UPDATE car
-			SET column1 = value1, column2 = value2, ...
-			WHERE condition";
-		
 		}
 
 		if (isset($_POST["add"])) {
@@ -144,10 +129,13 @@
 		if ($conn->connect_error) {        //checks the connection
 			die("Connection failed: " . $conn->connect_error);
 		}
+		
 		$sql = "SELECT *
 				FROM car
 				ORDER BY plate_id";
+		
 		$result = $conn->query($sql);  //gets the data of the user with the given inputs
+		
 		$modelArray = array();
 		$bodyArray = array();
 		$brandArray = array();
@@ -155,6 +143,7 @@
 		$yearArray = array();
 		$statusArray = array();
 		$officeArray = array();
+		
 		if ($result->num_rows > 0) {
 
 			while ($row = $result->fetch_assoc()) {  // check if the data exists
@@ -171,6 +160,7 @@
 		else {  //if data does not exit, sends error to login page
 			echo "no cars exist";
 		}
+
 		$modelArray = array_unique($modelArray);
 		$bodyArray = array_unique($bodyArray);
 		$brandArray = array_unique($brandArray);
@@ -186,82 +176,88 @@
 			<br>
 			
 			<label> model:</label>
-						<select name="searchedValModel">
-						<option selected="selected"></option>
-						<?php
-						foreach($modelArray as $item){
-							echo '<option value=' .$item. '>' .$item. '</option>';
-						}
-						?>
-						</select>
+			<select name="searchedValModel">
+				<option selected="selected"></option>
+				<?php
+				foreach($modelArray as $item){
+					echo '<option value=' .$item. '>' .$item. '</option>';
+				}
+				?>
+			</select>
 						
 			<label>body:</label>
-						<select name="searchedValBody">
-						<option selected="selected"></option>
-						<?php
-						foreach($bodyArray as $item){
-							echo '<option value=' .$item. '>' .$item. '</option>';
-						}
-						?>		
-						</select>
+			<select name="searchedValBody">
+				<option selected="selected"></option>
+				<?php
+				foreach($bodyArray as $item){
+					echo '<option value=' .$item. '>' .$item. '</option>';
+				}
+				?>
+			</select>
 						
 			<label>brand:</label>
-						<select name="searchedValBrand">
-						<option selected="selected"></option>
-						<?php
-						foreach($brandArray as $item){
-							echo '<option value=' .$item. '>' .$item. '</option>';
-						}
-						?>		
-						</select>
+			<select name="searchedValBrand">
+				<option selected="selected"></option>
+				<?php
+				foreach($brandArray as $item){
+					echo '<option value=' .$item. '>' .$item. '</option>';
+				}
+				?>
+			</select>
+
 			<label>color:</label>
-						<select name="searchedValColor">
-						<option selected="selected"></option>
-						<?php
-						foreach($colorArray as $item){
-							echo '<option value=' .$item. '>' .$item. '</option>';
-						}
-						?>		
-						</select>
+			<select name="searchedValColor">
+				<option selected="selected"></option>
+				<?php
+				foreach($colorArray as $item){
+					echo '<option value=' .$item. '>' .$item. '</option>';
+				}
+				?>
+			</select>
+
 			<label>year:</label>
-						<select name="searchedValYear">
-						<option selected="selected"></option>
-						<?php
-						foreach($yearArray as $item){
-							echo '<option value=' .$item. '>' .$item. '</option>';
-						}
-						?>		
-						</select>
+			<select name="searchedValYear">
+				<option selected="selected"></option>
+				<?php
+				foreach($yearArray as $item){
+					echo '<option value=' .$item. '>' .$item. '</option>';
+				}
+				?>
+			</select>
+
 			<label>status:</label>
-						<select name="searchedValStatus">
-						<option selected="selected"></option>
-						<?php
-						foreach($statusArray as $item){
-							echo '<option value=' .$item. '>' .$item. '</option>';
-						}
-						?>		
-						</select>
+			<select name="searchedValStatus">
+				<option selected="selected"></option>
+				<?php
+				foreach($statusArray as $item){
+					echo '<option value=' .$item. '>' .$item. '</option>';
+				}
+				?>
+			</select>
+
 			<label>Office:</label>
-						<select name="searchedValOffice">
-						<option selected="selected"></option>
-						<?php
-						foreach($officeArray as $item){
-							echo '<option value=' .$item. '>' .$item. '</option>';
-						}
-						?>		
-						</select>
+			<select name="searchedValOffice">
+				<option selected="selected"></option>
+				<?php
+				foreach($officeArray as $item){
+					echo '<option value=' .$item. '>' .$item. '</option>';
+				}
+				?>
+			</select>
 
 			<input type="submit" name="search" value="Filter">
 			<input type="text" name="newPlateID" placeholder="New Car Plate ID">
 			<input type="submit" name="add" value="Add New Car">
-			<input type="submit" name="save" value="Save Changes">
 			<br>
 
-			<br>
-			<table class="white-colour font20 black-background">
+		</form>
 
+		
+		<table id="data_table" class="white-colour font20 black-background">
+
+			<thead>
 				<tr>
-					<th>plate number</th>
+					<th>plate_id</th>
 					<th>model</th>
 					<th>body</th>
 					<th>brand</th>
@@ -270,37 +266,27 @@
 					<th>status</th>
 					<th>office</th>
 				</tr>
-				<?php while($row = mysqli_fetch_array($searchResults)):?>
-				<tr>
-					<td><input type="text" name="plateID" value=<?php echo $row["plate_id"];?> readonly></td>
-					<td><input type="text" name="carModel" value=<?php echo $row["model"];?>></td>
-					<td><input type="text" name="carBody" value=<?php echo $row["body"];?>></td>
-					<td><input type="text" name="carBrand" value=<?php echo $row["brand"];?>></td>
-					<td><input type="text" name="carColor" value=<?php echo $row["color"];?>></td>
-					<td><input type="number" name="carYear" min="1900" max="2099" step="1" value=<?php echo $row["year"];?>></td>
-					<td>
-						<?php
-						echo '<select name="carStatus">';
-						if ($row["status"] == "out_of_service") {
-							echo '	<option value="active">Active</option>
-									<option value="out_of_service" selected="selected">Out of Service</option>';
-						}
-						else {
-							echo '	<option value="active" selected="selected">Active</option>
-									<option value="out_of_service">Out of Service</option>';
-						}
-						echo '</select>';
-						?>
-					</td>
-					<td><input type="text" name="officeID" value=<?php echo $row["office_id"];?>></td>
-				</tr>
-				<?php endwhile;?>
-			
-			</table>
-		
-		</form>
+			</thead>
+			<tbody>
+				<?php while($row = mysqli_fetch_array($searchResults)): ?>
+				<tr id="<?php echo $row['plate_id']; ?>">
 
-    </section>
+					<td><?php echo $row['plate_id'];?></td>
+					<td><?php echo $row["model"];?></td>
+					<td><?php echo $row['body'];?></td>
+					<td><?php echo $row['brand'];?></td>
+					<td><?php echo $row['color'];?></td>
+					<td><?php echo $row['year'];?></td>
+					<td><?php echo $row['status']?></td>
+					<td><?php echo $row['office_id'];?></td>
+				
+				</tr>
+				<?php endwhile; ?>
+			</tbody>
+		
+		</table>
+    
+	</section>
 
 </body>
 </html>

@@ -3,9 +3,9 @@
 
 	<title>Login</title>
 	<!--Style sheets-->
-	<link rel="stylesheet" href="colours.css">
-    <link rel="stylesheet" href="location-size.css">
-    <link rel="stylesheet" href="fonts.css">
+	<link rel="stylesheet" href="/Car-Rental-System/Styles/colours.css">
+    <link rel="stylesheet" href="/Car-Rental-System/Styles/location-size.css">
+    <link rel="stylesheet" href="/Car-Rental-System/Styles/fonts.css">
 
 	<script>
 

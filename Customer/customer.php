@@ -1,4 +1,4 @@
- <?php
+<?php
 session_start();
 if(isset($_GET['email']) && $_GET['email'] !== ""){
 	$_SESSION['email'] = $_GET['email'];
@@ -17,7 +17,7 @@ while($row = mysqli_fetch_array($result)){
 	$id = $row["user_id"];
 }
 if(isset($_POST["checkout"])){
-	header("Location: /car-rental-system/checkout.php? id='$id'");
+	header("Location: /car-rental-system/customer/checkout.php? id='$id'");
 }
 ?>
 
@@ -26,9 +26,9 @@ if(isset($_POST["checkout"])){
 
 	<title>Customer</title>
 	<!--Style sheets-->
-	<link rel="stylesheet" href="colours.css">
-    <link rel="stylesheet" href="location-size.css">
-    <link rel="stylesheet" href="fonts.css">
+	<link rel="stylesheet" href="/Car-Rental-System/Styles/colours.css">
+    <link rel="stylesheet" href="/Car-Rental-System/Styles/location-size.css">
+    <link rel="stylesheet" href="/Car-Rental-System/Styles/fonts.css">
 
 	<style>
 		#customers {
@@ -56,13 +56,15 @@ if(isset($_POST["checkout"])){
 <body>
 
 	<nav class="nav-bar black-background">
-		<a href="index.html">
-        	<h2 class="font26 navbar-third white-colour">Car Rental System</h2>
-		</a>
-		<a href="logout.php">
+
+		<a href="/Car-Rental-System/logout.php">
         	<h2 class="font26 logout-margins white-colour">Logout</h2>
 		</a>
-    </nav>
+
+		<h2 class="font26 title-margins white-colour">Car Rental System</h2>
+    
+	</nav>
+
 	<section class="scrollbar">
 
 <?php
@@ -153,6 +155,7 @@ if(isset($_POST["checkout"])){
 		$countryArray = array_unique($countryArray);
 		$cityArray = array_unique($cityArray);
 ?>
+		<br>
 		<form action="customer.php" method="POST" class="white-colour bold font20">
 			<label>  Model:  </label>
 						<select name="searchedValModel">
@@ -229,6 +232,8 @@ if(isset($_POST["checkout"])){
 						?>		
 						</select>
 			<input type="submit" name="search" value="filter">
+		<br>
+		<br>
 		<table id="customers">
 			<tr>
 				<th>plate_id</th>

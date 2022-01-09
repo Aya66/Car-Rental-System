@@ -38,10 +38,10 @@
     while ($row = $result->fetch_assoc()) {  // check if the data exists
 
       if ($row["is_admin"] == 1) { // if user is admin
-        header('Location: /car-rental-system/system.php');
+        header('Location: /car-rental-system/System/system_cars.php');
       }
       else { // if user is customer
-        header("Location: /car-rental-system/customer.php? email= '$email'");
+        header("Location: /car-rental-system/Customer/customer.php? email= '$email'");
       }
     
     }
