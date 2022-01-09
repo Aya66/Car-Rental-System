@@ -194,3 +194,15 @@ body {
   background-color: black;
   color: white;
 }
+.payment-button-size {
+  border: none;
+  padding: 8px 16px 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  width: 150px;
+  height: 70px;
+}

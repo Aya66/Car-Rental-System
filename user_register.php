@@ -14,7 +14,8 @@
 			var lname = document.getElementById("lname").value;
 			var email = document.getElementById("email").value;
 			var bd = document.getElementById("bd").value;
-			var gender = document.getElementById("gender").value;
+			var genderM = document.getElementById("genderM").checked;
+			var genderF = document.getElementById("genderF").checked;
 			var country = document.getElementById("country").value;
 			var country = document.getElementById("city").value;
 			var password = document.getElementById("password").value;
@@ -35,7 +36,7 @@
 				alert("Must enter birth-date");
 				return false;
 			}
-			if (gender == "") {
+			if (genderM == false && genderF == false) {
 				alert("Must enter gender");
 				return false;
 			}
@@ -101,9 +102,9 @@
 				<br>
 				<input type="date" placeholder="Birth-date" name="bd" id="bd" class="date-textbox">
 				<label class="font16 white-colour">M</label>
-				<input type="radio" placeholder="Gender" name="gender" id="gender" value = "M" >
+				<input type="radio" placeholder="Gender" name="gender" id="genderM" value = "M" >
 				<label class="font16 white-colour">F</label>
-				<input type="radio" placeholder="Gender" name="gender" id="gender" value = "F" >
+				<input type="radio" placeholder="Gender" name="gender" id="genderF" value = "F" >
 				<br>
 				<input type="text" placeholder="Country" name="country" id="country" class="reg-textbox">
 				<br>
