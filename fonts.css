@@ -10,3 +10,9 @@
 .font30{
     font-size: 30px;
 }
+.fonts{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.bold{
+    font-weight: bold;
+}

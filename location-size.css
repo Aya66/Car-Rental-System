@@ -153,3 +153,6 @@ body {
   height: 80%;
   overflow: auto;
 }
+.small-textbox{
+  width: 50px;
+}

@@ -9,11 +9,32 @@
             alert("Payment Successful!");
         }
     </script>
+    <style>
+		#customers {
+		font-family: Arial, Helvetica, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+		}
+		#customers td, #customers th {
+		border: 1px solid #ddd;
+		padding: 8px;
+		color: white;
+		font-weight: bold;
+		}
+		#customers tr:hover {background-color: grey;}
+		#customers th {
+		padding-top: 12px;
+		padding-bottom: 12px;
+		text-align: center;
+		background-color: black;
+		color: white;
+		}
+	</style>
 </head>
 <body>
     <nav class="nav-bar black-background">
 		<a href="index.html">
-        	<h2 class="font26 title-margins white-colour">Car Rental System</h2>
+        	<h2 class="font26 navbar-third white-colour">Car Rental System</h2>
 		</a>
         <a href="logout.php">
         	<h2 class="font26 logout-margins white-colour">Logout</h2>
@@ -45,7 +66,7 @@
 
         ?>
         <h1 class="login-text white-colour font30">Unpaid Reservations</h1>
-        <table class="white-colour font20 black-background">
+        <table id="customers">
             <tr>
                 <th class="font16 white-colour">Plate ID</th>
                 <th class="font16 white-colour">Model</th>

@@ -29,19 +29,41 @@ if(isset($_POST["checkout"])){
 	<link rel="stylesheet" href="colours.css">
     <link rel="stylesheet" href="location-size.css">
     <link rel="stylesheet" href="fonts.css">
+
+	<style>
+		#customers {
+		font-family: Arial, Helvetica, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+		}
+		#customers td, #customers th {
+		border: 1px solid #ddd;
+		padding: 8px;
+		color: white;
+		font-weight: bold;
+		}
+		#customers tr:hover {background-color: grey;}
+		#customers th {
+		padding-top: 12px;
+		padding-bottom: 12px;
+		text-align: center;
+		background-color: black;
+		color: white;
+		}
+	</style>
 </head>
 
 <body>
 
 	<nav class="nav-bar black-background">
 		<a href="index.html">
-        	<h2 class="font26 title-margins white-colour">Car Rental System</h2>
+        	<h2 class="font26 navbar-third white-colour">Car Rental System</h2>
 		</a>
 		<a href="logout.php">
         	<h2 class="font26 logout-margins white-colour">Logout</h2>
 		</a>
     </nav>
-	<section class=" white-colour font20 scrollbar">
+	<section class="scrollbar">
 
 <?php
 		if(isset($_POST["search"])){
@@ -106,7 +128,6 @@ if(isset($_POST["checkout"])){
 		$countryArray = array();
 		$cityArray = array();
 		if ($result->num_rows > 0) {
-			echo "plate_id model body brand color year status country city <br>";
 			while ($row = $result->fetch_assoc()) {  // check if the data exists
 				$plateArray[] = $row["plate_id"];
 				$modelArray[] = $row["model"];
@@ -132,9 +153,8 @@ if(isset($_POST["checkout"])){
 		$countryArray = array_unique($countryArray);
 		$cityArray = array_unique($cityArray);
 ?>
-		<p class="font16">Filter Search:</p>
-		<form action="customer.php" method="POST" class="white-colour font20 black-background">
-			<label> model:</label>
+		<form action="customer.php" method="POST" class="white-colour bold font20">
+			<label>  Model:  </label>
 						<select name="searchedValModel">
 						<option selected="selected"></option>
 						<?php
@@ -144,7 +164,7 @@ if(isset($_POST["checkout"])){
 						?>		
 						</select>
 						
-			<label>body:</label>
+			<label>  Body:  </label>
 						<select name="searchedValBody">
 						<option selected="selected"></option>
 						<?php
@@ -154,7 +174,7 @@ if(isset($_POST["checkout"])){
 						?>		
 						</select>
 						
-			<label>brand:</label>
+			<label>  Brand:  </label>
 						<select name="searchedValBrand">
 						<option selected="selected"></option>
 						<?php
@@ -163,7 +183,7 @@ if(isset($_POST["checkout"])){
 						}
 						?>		
 						</select>
-			<label>color:</label>
+			<label>  Color:  </label>
 						<select name="searchedValColor">
 						<option selected="selected"></option>
 						<?php
@@ -172,7 +192,7 @@ if(isset($_POST["checkout"])){
 						}
 						?>		
 						</select>
-			<label>year:</label>
+			<label>  Year:  </label>
 						<select name="searchedValYear">
 						<option selected="selected"></option>
 						<?php
@@ -181,7 +201,7 @@ if(isset($_POST["checkout"])){
 						}
 						?>		
 						</select>
-			<label>status:</label>
+			<label>  Status:  </label>
 						<select name="searchedValStatus">
 						<option selected="selected"></option>
 						<?php
@@ -190,7 +210,7 @@ if(isset($_POST["checkout"])){
 						}
 						?>		
 						</select>
-			<label>country:</label>
+			<label>  Country:  </label>
 						<select name="searchedValCountry">
 						<option selected="selected"></option>
 						<?php
@@ -199,7 +219,7 @@ if(isset($_POST["checkout"])){
 						}
 						?>		
 						</select>
-			<label>city:</label>
+			<label>  City:  </label>
 						<select name="searchedValCity">
 						<option selected="selected"></option>
 						<?php
@@ -209,7 +229,7 @@ if(isset($_POST["checkout"])){
 						?>		
 						</select>
 			<input type="submit" name="search" value="filter">
-		<table class="white-colour font20 black-background">
+		<table id="customers">
 			<tr>
 				<th>plate_id</th>
 				<th>model</th>
@@ -238,9 +258,9 @@ if(isset($_POST["checkout"])){
 
 			<?php endwhile;?>
 		</table>
-		<form method="post">
+		<form method="POST" class="white-colour bold font20">
 			<br>
-			<label>Enter the desired car's plate_id</label>
+			<label>Enter the desired car's plate ID  </label>
 			<select name="searchedValPlate">
 						<option selected="selected"></option>
 						<?php
@@ -249,8 +269,8 @@ if(isset($_POST["checkout"])){
 						}
 						?>		
 						</select>
-			<label for="duration">Rent Duration</label>
-			<input type="text" id="duration" name="duration">
+			<label for="duration">  Rent Duration (days)  </label>
+			<input type="text" id="duration" name="duration" class="small-textbox">
 			<input type="submit" value="Reserve" name="chosen" id="reserved">
 		</form>
 		<?php
@@ -264,7 +284,7 @@ if(isset($_POST["checkout"])){
 			$finalResult = mysqli_query($conn,$car);
 			
 			?>
-			<table>
+			<table id="customers">
 			<tr>
 				<th>plate_id</th>
 				<th>model</th>
