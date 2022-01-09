@@ -5,24 +5,24 @@ INSERT INTO `office` (`office_id`, `country`, `city`) VALUES
 (4, 'Germany', 'Mannheim'),
 (5, 'Sweden', 'Lerum');
 
-INSERT INTO `car` (`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `office_id`) VALUES
-(6283, 'grandland', 'suv', 'opel', 'black', 2005, 'active', 1),
-(9677, 'passat', 'sedan', 'volkswagen', 'silver', 2009, 'active', 1),
-(6384, 'ateca', 'suv', 'seat', 'black', 2022, 'out of service', 1),
-(2453, 'optra', 'sedan', 'chevrolet', 'gray', 2017, 'active', 2),
-(8765, 'b180', 'hatchback', 'mercedes', 'gray', 2011, 'active', 2),
-(9712, 'x3', 'suv', 'bmw', 'gray', 2009, 'active', 3),
-(8419, '500x', 'suv', 'fiat', 'white', 2021, 'active', 3),
-(9972, 'kadiaq', 'suv', 'skoda', 'white', 2015, 'active', 3),
-(4850, 'lanos', 'sedan', 'chevrolet', 'blue', 2021, 'active', 4),
-(8599, '508', 'sedan', 'peugeot', 'silver', 2007, 'active', 5),
-(5796, '508', 'sedan', 'peugeot', 'blue', 2006, 'active', 5),
-(5682, 'q3', 'suv', 'audi', 'gray', 2021, 'active', 5),
-(8459, '500x', 'suv', 'fiat', 'blue', 2014, 'active', 5),
-(8755, 'a3', 'sedan', 'audi', 'white', 2017, 'active', 5);
+INSERT INTO `car` (`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `office_id` , `price_day`) VALUES
+(6283, 'grandland', 'suv', 'opel', 'black', 2005, 'active', 1 , 50),
+(9677, 'passat', 'sedan', 'volkswagen', 'silver', 2009, 'active', 1 , 70),
+(6384, 'ateca', 'suv', 'seat', 'black', 2022, 'out of service', 1 , 100),
+(2453, 'optra', 'sedan', 'chevrolet', 'gray', 2017, 'active', 2 , 100),
+(8765, 'b180', 'hatchback', 'mercedes', 'gray', 2011, 'active', 2 , 40),
+(9712, 'x3', 'suv', 'bmw', 'gray', 2009, 'active', 3 , 200),
+(8419, '500x', 'suv', 'fiat', 'white', 2021, 'active', 3 , 300),
+(9972, 'kadiaq', 'suv', 'skoda', 'white', 2015, 'active', 3,60),
+(4850, 'lanos', 'sedan', 'chevrolet', 'blue', 2021, 'active', 4 , 40),
+(8599, '508', 'sedan', 'peugeot', 'silver', 2007, 'active', 5 , 50),
+(5796, '508', 'sedan', 'peugeot', 'blue', 2006, 'active', 5, 55),
+(5682, 'q3', 'suv', 'audi', 'gray', 2021, 'active', 5 , 70),
+(8459, '500x', 'suv', 'fiat', 'blue', 2014, 'active', 5 , 110),
+(8755, 'a3', 'sedan', 'audi', 'white', 2017, 'active', 5 , 150);
 
 INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `password`, `email`, `birthdate`, `gender`, `country`, `city`, `is_admin`) VALUES
-(1, 'Paki', 'Cairo', 'm617p6', 'p.cairo@hotmail.com', '1961-08-21', "", 'Canada', 'Mundare', FALSE),
+(1, 'Paki', 'Cairo', 'm617p6', 'p.cairo@hotmail.com', '1961-08-21', "M", 'Canada', 'Mundare', FALSE),
 (2, 'Amery', 'Hammett', '2fnf9e', 'a.hammett4143@hotmail.com', '1974-08-03', 'F', 'Chile', 'Florida', FALSE),
 (3, 'Stuart', 'Walker', 'c0hg2m', 'walker-stuart@outlook.com', '1961-04-17', 'M', 'United Kingdom', 'Watford', FALSE),
 (4, 'Stone', 'Tanner', 'p40dlb', 'tannerstone@yahoo.com', '1962-01-17', 'M', 'Netherlands', 'Rotem', FALSE),
@@ -40,5 +40,5 @@ INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `password`, `email`, `
 (16, 'Jackson', 'Oleg', 'xsu986', 'joleg4886@hotmail.com', '1973-05-17', 'M', 'Norway', 'Grimstad', FALSE),
 (17, 'admin', 'admin', 'dv3o77', 'carrentalsystem@gmail.com', '2000-01-01', "", 'Egypt', 'Alexandria', TRUE);
 
-INSERT INTO `reservation` (`reservation_id`, `user_id`, `plate_id`, `office_id`, `reservation_date`, `paid`) VALUES
-(1, 4, 8459, 5, '2021-08-03', TRUE);
+INSERT INTO `reservation` (`reservation_id`, `user_id`, `plate_id`, `office_id`, `reservation_date`, `paid` ,`rent_days`) VALUES
+(1, 4, 8459, 5, '2021-08-03', TRUE , 20);

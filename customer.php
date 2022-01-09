@@ -53,7 +53,7 @@ if(isset($_POST["checkout"])){
 			$searchedValStatus = $_POST["searchedValStatus"];
 			$searchedValCountry = $_POST["searchedValCountry"];
 			$searchedValCity = $_POST["searchedValCity"];
-			$query = "SELECT `plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city` FROM `car`,`office` WHERE 
+			$query = "SELECT `plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`,`price_day` FROM `car`,`office` WHERE 
 			car.office_id = office.office_id 
 			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValModel."%'
 			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValBody."%'
@@ -67,7 +67,7 @@ if(isset($_POST["checkout"])){
 			$searchResults = getQueryResults($query);
 		}
 		else{
-			$query ="SELECT C.plate_id, C.model, C.body, C.brand, C.color, C.year, C.status, OF.country, OF.city
+			$query ="SELECT C.plate_id, C.model, C.body, C.brand, C.color, C.year, C.status,C.price_day, OF.country, OF.city
 					 FROM car C, office OF
 					 WHERE C.office_id = OF.office_id AND C.plate_id NOT IN (SELECT plate_id FROM reservation)
 					 ORDER BY C.plate_id";
@@ -220,6 +220,7 @@ if(isset($_POST["checkout"])){
 				<th>status</th>
 				<th>country</th>
 				<th>city</th>
+				<th>price/day</th>
 			</tr>
 			<?php while($row = mysqli_fetch_array($searchResults)):?>
 			<tr>
@@ -232,13 +233,14 @@ if(isset($_POST["checkout"])){
 				<td><?php echo $row["status"];?></td>
 				<td><?php echo $row["country"];?></td>
 				<td><?php echo $row["city"];?></td>
+				<td><?php echo $row["price_day"];?></td>
 			</tr>
 
 			<?php endwhile;?>
 		</table>
 		<form method="post">
-			<label>Enter the desired car's plate_id</label>
 			<br>
+			<label>Enter the desired car's plate_id</label>
 			<select name="searchedValPlate">
 						<option selected="selected"></option>
 						<?php
@@ -247,13 +249,15 @@ if(isset($_POST["checkout"])){
 						}
 						?>		
 						</select>
-			<br>
+			<label for="duration">Rent Duration</label>
+			<input type="text" id="duration" name="duration">
 			<input type="submit" value="Reserve" name="chosen" id="reserved">
 		</form>
 		<?php
 		
 		if(isset($_POST["chosen"])){
 			$searchedValPlate = $_POST["searchedValPlate"];
+			$duration = $_POST["duration"];
 			$car = "SELECT *
 			FROM car,office
 			WHERE car.office_id = office.office_id AND car.plate_id = $searchedValPlate";
@@ -271,6 +275,7 @@ if(isset($_POST["checkout"])){
 				<th>status</th>
 				<th>country</th>
 				<th>city</th>
+				<th>price/day</th>
 			</tr>
 			<?php while($row = mysqli_fetch_array($finalResult)):?>
 			<tr>
@@ -283,13 +288,14 @@ if(isset($_POST["checkout"])){
 				<td><?php echo $row["status"];?></td>
 				<td><?php echo $row["country"];?></td>
 				<td><?php echo $row["city"];?></td>
+				<td><?php echo $row["price_day"];?></td>
 				<?php $officeid = $row["office_id"];
 				$plateid = $row["plate_id"];
 				?>
 			</tr>
 			<?php endwhile;
-			$reserve = "INSERT INTO `reservation` (`user_id`, `plate_id`, `office_id`, `reservation_date`, `paid`) VALUES
-			($id, $plateid, $officeid, date(CURRENT_TIMESTAMP), FALSE)";
+			$reserve = "INSERT INTO `reservation` (`user_id`, `plate_id`, `office_id`, `reservation_date`, `paid`,`rent_days`) VALUES
+			($id, $plateid, $officeid, date(CURRENT_TIMESTAMP), FALSE , $duration)";
 			$conn->query($reserve);
 			?>
 		</table>

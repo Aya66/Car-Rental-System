@@ -11,6 +11,7 @@ create table car(
     year int,
     status varchar(225), /* active or out of service */
     office_id int,
+    price_day float,
     PRIMARY KEY (plate_id)
 );
 
@@ -34,7 +35,10 @@ create table reservation(
     plate_id int not null,
     office_id int,
     reservation_date DATE not null,
+    rental_date DATE,
+    return_date DATE,
     paid boolean not null,
+    rent_days int,
     PRIMARY KEY (user_id, plate_id, office_id)
 );
 
