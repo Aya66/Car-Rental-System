@@ -3,9 +3,9 @@
 
 	<title>Offices</title>
 	<!--Style sheets-->
-	<link rel="stylesheet" href="colours.css">
-    <link rel="stylesheet" href="location-size.css">
-    <link rel="stylesheet" href="fonts.css">
+	<link rel="stylesheet" href="/Car-Rental-System/Styles/colours.css">
+    <link rel="stylesheet" href="/Car-Rental-System/Styles/location-size.css">
+    <link rel="stylesheet" href="/Car-Rental-System/Styles/fonts.css">
 
 </head>
 
@@ -25,7 +25,11 @@
         	<h2 class="font26 navbar-third white-colour">Reservations</h2>
 		</a>
 
-		<a href="logout.php">
+		<a href="system_offices.php">
+        	<h2 class="font26 navbar-fourth white-colour">Offices</h2>
+		</a>
+
+		<a href="/Car-Rental-System/logout.php">
         	<h2 class="font26 logout-margins white-colour">Logout</h2>
 		</a>
     
@@ -36,16 +40,20 @@
 		<?php
 
 		if (isset($_POST["search"])) {
-			$searchedValModel = $_POST["searchedValModel"];
-			$searchedValColor = $_POST["searchedValColor"];
-			$query = "SELECT `user_id`, `first_name`, `last_name`, `email`, `birthdate`, `gender`, `country`,`city` FROM user WHERE is_admin = 0";
+			$searchedValOffice = $_POST["searchedValOffice"];
+			$searchedValCountry = $_POST["searchedValCountry"];
+			$searchedValCity = $_POST["searchedValCity"];
+			$query = "	SELECT *
+						FROM office
+						WHERE CONCAT(`office_id`) LIKE '%".$searchedValOffice."%'
+							AND CONCAT(`country`) LIKE '%".$searchedValCountry."%'
+							AND CONCAT(`city`) LIKE '%".$searchedValCity."%'";
 			$searchResults = getQueryResults($query);
 		}
 		else {
-			$query = "	SELECT `user_id`, `first_name`, `last_name`, `email`, `birthdate`, `gender`, `country`,`city`
-						FROM user
-                        WHERE is_admin = 0
-						ORDER BY user_id";
+			$query = "	SELECT *
+						FROM office
+						ORDER BY office_id";
 			$searchResults = getQueryResults($query);
 		}
 
@@ -59,13 +67,78 @@
 			return $filteredResult;
 		}
 
+		$servername = "localhost";
+		$username = "root";
+		$password = "";
+		$dbname = "carrentalsystem";
+		$conn = new mysqli($servername, $username, $password, $dbname);  //creates the connection
+		if ($conn->connect_error) {        //checks the connection
+			die("Connection failed: " . $conn->connect_error);
+		}
+		
+		$sql = "SELECT *
+				FROM office
+				ORDER BY office_id";
+		
+		$result = $conn->query($sql);  //gets the data of the user with the given inputs
+		
+		$officeArray = array();
+		$countryArray = array();
+		$cityArray = array();
+		
+		if ($result->num_rows > 0) {
+
+			while ($row = $result->fetch_assoc()) {  // check if the data exists
+				$officeArray[] = $row["office_id"];
+				$countryArray[] = $row["country"];
+				$cityArray[] = $row["city"];
+			}
+			
+		}
+		else {  //if data does not exit, sends error to login page
+			echo "no cars exist";
+		}
+
+		$officeArray = array_unique($officeArray);
+		$countryArray = array_unique($countryArray);
+		$cityArray = array_unique($cityArray);
+
 		?>
 
-		<form action="system_users.php" method="POST">
+		<form action="system_offices.php" method="POST">
 
 			<br>
-			<input type="text" name="searchedValModel" placeholder="Search here">
-			<input type="text" name="searchedValColor" placeholder="Search here">
+			
+			<label> Office_ID:</label>
+			<select name="searchedValOffice">
+				<option selected="selected"></option>
+				<?php
+				foreach($officeArray as $item){
+					echo '<option value=' .$item. '>' .$item. '</option>';
+				}
+				?>
+			</select>
+						
+			<label>Country:</label>
+			<select name="searchedValCountry">
+				<option selected="selected"></option>
+				<?php
+				foreach($countryArray as $item){
+					echo '<option value=' .$item. '>' .$item. '</option>';
+				}
+				?>
+			</select>
+						
+			<label>City:</label>
+			<select name="searchedValCity">
+				<option selected="selected"></option>
+				<?php
+				foreach($cityArray as $item){
+					echo '<option value=' .$item. '>' .$item. '</option>';
+				}
+				?>
+			</select>
+
 			<input type="submit" name="search" value="Filter">
 			<br>
 
@@ -73,23 +146,13 @@
 			<table class="white-colour font20 black-background">
 
 				<tr>
-					<th>User ID</th>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Email</th>
-					<th>Birthdate</th>
-					<th>Gender</th>
+					<th>Office_ID</th>
 					<th>Country</th>
 					<th>City</th>
 				</tr>
 				<?php while($row = mysqli_fetch_array($searchResults)):?>
 				<tr>
-                    <td><?php echo $row["user_id"];?></td>
-                    <td><?php echo $row["first_name"];?></td>
-                    <td><?php echo $row["last_name"];?></td>
-                    <td><?php echo $row["email"];?></td>
-                    <td><?php echo $row["birthdate"];?></td>
-                    <td><?php echo $row["gender"];?></td>
+                    <td><?php echo $row["office_id"];?></td>
                     <td><?php echo $row["country"];?></td>
                     <td><?php echo $row["city"];?></td>
 				</tr>

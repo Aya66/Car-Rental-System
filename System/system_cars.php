@@ -29,6 +29,10 @@
         	<h2 class="font26 navbar-third white-colour">Reservations</h2>
 		</a>
 
+		<a href="system_offices.php">
+        	<h2 class="font26 navbar-fourth white-colour">Offices</h2>
+		</a>
+
 		<a href="/Car-Rental-System/logout.php">
         	<h2 class="font26 logout-margins white-colour">Logout</h2>
 		</a>

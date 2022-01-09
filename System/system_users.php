@@ -3,9 +3,9 @@
 
 	<title>Users</title>
 	<!--Style sheets-->
-	<link rel="stylesheet" href="colours.css">
-    <link rel="stylesheet" href="location-size.css">
-    <link rel="stylesheet" href="fonts.css">
+	<link rel="stylesheet" href="/Car-Rental-System/Styles/colours.css">
+    <link rel="stylesheet" href="/Car-Rental-System/Styles/location-size.css">
+    <link rel="stylesheet" href="/Car-Rental-System/Styles/fonts.css">
 
 </head>
 
@@ -25,7 +25,11 @@
         	<h2 class="font26 navbar-third white-colour">Reservations</h2>
 		</a>
 
-		<a href="logout.php">
+		<a href="system_offices.php">
+        	<h2 class="font26 navbar-fourth white-colour">Offices</h2>
+		</a>
+
+		<a href="/Car-Rental-System/logout.php">
         	<h2 class="font26 logout-margins white-colour">Logout</h2>
 		</a>
     
@@ -58,6 +62,45 @@
 			$filteredResult = mysqli_query($conn, $query);
 			return $filteredResult;
 		}
+
+		$servername = "localhost";
+		$username = "root";
+		$password = "";
+		$dbname = "carrentalsystem";
+		$conn = new mysqli($servername, $username, $password, $dbname);  //creates the connection
+		if ($conn->connect_error) {        //checks the connection
+			die("Connection failed: " . $conn->connect_error);
+		}
+		
+		$sql = "SELECT *
+				FROM user
+				ORDER BY user_id";
+		
+		$result = $conn->query($sql);  //gets the data of the user with the given inputs
+		
+		$userArray = array();
+		$genderArray = array();
+		$countryArray = array();
+		$cityArray = array();
+		
+		if ($result->num_rows > 0) {
+
+			while ($row = $result->fetch_assoc()) {  // check if the data exists
+				$userArray[] = $row["user_id"];
+				$genderArray[] = $row["gender"];
+				$countryArray[] = $row["country"];
+				$cityArray[] = $row["city"];
+			}
+			
+		}
+		else {  //if data does not exit, sends error to login page
+			echo "no cars exist";
+		}
+
+		$userArray = array_unique($userArray);
+		$firstArray = array_unique($firstArray);
+		$countryArray = array_unique($countryArray);
+		$cityArray = array_unique($cityArray);
 
 		?>
 

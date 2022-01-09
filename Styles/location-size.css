@@ -79,6 +79,13 @@ body {
   left: 260px;
   padding-top: 35px;
 }
+.navbar-fourth {
+  position: absolute;
+  margin-top: 0;
+  margin-bottom: 0;
+  left: 420px;
+  padding-top: 35px;
+}
 .sign-up-text-margins {
   margin-top: 80px;
   margin-bottom: 0;
