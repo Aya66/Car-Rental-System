@@ -41,7 +41,7 @@
         header('Location: /car-rental-system/system.php');
       }
       else { // if user is customer
-        header('Location: /car-rental-system/customer.php');
+        header("Location: /car-rental-system/customer.php? email= '$email'");
       }
     
     }

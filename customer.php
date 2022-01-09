@@ -1,5 +1,37 @@
+<?php
+session_start();
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "carrentalsystem";
+$conn = mysqli_connect($servername, $username, $password, $dbname);  //creates the connection
+
+if ( isset($_GET['email']))  
+{
+	$email =  $_GET['email'];
+	//echo $email;
 
 
+$customerID = "SELECT user_id
+FROM `user`
+WHERE `user`.email = $email";
+
+
+$result = $conn->query($customerID);  //gets the data of the user with the given inputs
+
+while($row = mysqli_fetch_array($result)){
+	echo "id";
+	echo $row["user_id"]; 
+	$id = $row["user_id"];
+}
+}
+if( empty($_SESSION['id']) ) {
+	$_SESSION['id'] = $id;
+}
+
+echo $_SESSION['id'];
+?>
 
 <html>
 <head>
@@ -9,13 +41,6 @@
 	<link rel="stylesheet" href="colours.css">
     <link rel="stylesheet" href="location-size.css">
     <link rel="stylesheet" href="fonts.css">
-
-	<script>
-		function printFilter(){
-			var model = document.getElementById("filteredModel").value;
-			alert(model);
-		}
-	</script>
 </head>
 
 <body>
@@ -79,6 +104,7 @@
 				WHERE C.office_id = OF.office_id
 				ORDER BY C.plate_id";
 		$result = $conn->query($sql);  //gets the data of the user with the given inputs
+		$plateArray = array();
 		$modelArray = array();
 		$bodyArray = array();
 		$brandArray = array();
@@ -90,6 +116,7 @@
 		if ($result->num_rows > 0) {
 			echo "plate_id model body brand color year status country city <br>";
 			while ($row = $result->fetch_assoc()) {  // check if the data exists
+				$plateArray[] = $row["plate_id"];
 				$modelArray[] = $row["model"];
 				$bodyArray[] = $row["body"];
 				$brandArray[] = $row["brand"];
@@ -190,6 +217,8 @@
 						?>		
 						</select>
 			<input type="submit" name="search" value="filter">
+			<?php
+			$var = 11;?>
 		<table>
 			<tr>
 				<th>plate_id</th>
@@ -214,12 +243,62 @@
 				<td><?php echo $row["country"];?></td>
 				<td><?php echo $row["city"];?></td>
 			</tr>
+
 			<?php endwhile;?>
 		</table>
+		<form method="post">
+			<label>Enter the desired car's plate_id</label>
+			<br>
+			<select name="searchedValPlate">
+						<option selected="selected"></option>
+						<?php
+						foreach($plateArray as $item){
+							echo '<option value=' .$item. '>' .$item. '</option>';
+						}
+						?>		
+						</select>
+			<br>
+			<input type="submit" value="Reserve" name="chosen">
 		</form>
 		<?php
+		
+		if(isset($_POST["chosen"])){
+			$searchedValPlate = $_POST["searchedValPlate"];
+			$car = "SELECT *
+			FROM car,office
+			WHERE car.office_id = office.office_id AND car.plate_id = $searchedValPlate";
+			$finalResult = mysqli_query($conn,$car);
+			?>
+			<table>
+			<tr>
+				<th>plate_id</th>
+				<th>model</th>
+				<th>body</th>
+				<th>brand</th>
+				<th>color</th>
+				<th>year</th>
+				<th>status</th>
+				<th>country</th>
+				<th>city</th>
+			</tr>
+			<?php while($row = mysqli_fetch_array($finalResult)):?>
+			<tr>
+				<td><?php echo $row["plate_id"];?></td>
+				<td><?php echo $row["model"];?></td>
+				<td><?php echo $row["body"];?></td>
+				<td><?php echo $row["brand"];?></td>
+				<td><?php echo $row["color"];?></td>
+				<td><?php echo $row["year"];?></td>
+				<td><?php echo $row["status"];?></td>
+				<td><?php echo $row["country"];?></td>
+				<td><?php echo $row["city"];?></td>
+			</tr>
+			<?php endwhile;?>
+		</table>
+		<?php
+		echo $id;
+		}
 		$conn->close();
-
 		?>
 
     </section>
