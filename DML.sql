@@ -40,5 +40,5 @@ INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `password`, `email`, `
 (16, 'Jackson', 'Oleg', 'xsu986', 'joleg4886@hotmail.com', '1973-05-17', 'M', 'Norway', 'Grimstad', FALSE),
 (17, 'admin', 'admin', 'dv3o77', 'carrentalsystem@gmail.com', '2000-01-01', "", 'Egypt', 'Alexandria', TRUE);
 
-INSERT INTO `reservation` (`reservation_id`, `user_id`, `plate_id`, `office_id`, `reservation_date`) VALUES
-(1, 4, 8459, 5, '2021-08-03');
+INSERT INTO `reservation` (`reservation_id`, `user_id`, `plate_id`, `office_id`, `reservation_date`, `paid`) VALUES
+(1, 4, 8459, 5, '2021-08-03', TRUE);

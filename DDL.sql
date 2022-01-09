@@ -34,6 +34,7 @@ create table reservation(
     plate_id int not null,
     office_id int,
     reservation_date DATE not null,
+    paid boolean not null,
     PRIMARY KEY (user_id, plate_id, office_id)
 );
 

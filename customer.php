@@ -4,7 +4,6 @@ if(isset($_GET['email']) && $_GET['email'] !== ""){
 	$_SESSION['email'] = $_GET['email'];
 }
 $sesEmail = $_SESSION['email'];
-//echo $sesEmail;
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -15,9 +14,10 @@ WHERE `user`.email = $sesEmail ";
 $conn = mysqli_connect($servername, $username, $password, $dbname);  //creates the connection
 $result = $conn->query($sql);
 while($row = mysqli_fetch_array($result)){
-	//echo $row["user_id"];
 	$id = $row["user_id"];
-	echo $id;
+}
+if(isset($_POST["checkout"])){
+	header("Location: /car-rental-system/checkout.php? id='$id'");
 }
 ?>
 
@@ -36,6 +36,9 @@ while($row = mysqli_fetch_array($result)){
 	<nav class="nav-bar black-background">
 		<a href="index.html">
         	<h2 class="font26 title-margins white-colour">Car Rental System</h2>
+		</a>
+		<a href="logout.php">
+        	<h2 class="font26 logout-margins white-colour">Logout</h2>
 		</a>
     </nav>
 	<section class=" white-colour font20 scrollbar">
@@ -59,13 +62,14 @@ while($row = mysqli_fetch_array($result)){
 			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValYear."%'
 			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValStatus."%'
 			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValCountry."%'
-			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValCity."%'";
+			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValCity."%'
+			AND car.plate_id NOT IN (SELECT plate_id FROM reservation)";
 			$searchResults = getQueryResults($query);
 		}
 		else{
 			$query ="SELECT C.plate_id, C.model, C.body, C.brand, C.color, C.year, C.status, OF.country, OF.city
 					 FROM car C, office OF
-					 WHERE C.office_id = OF.office_id
+					 WHERE C.office_id = OF.office_id AND C.plate_id NOT IN (SELECT plate_id FROM reservation)
 					 ORDER BY C.plate_id";
 			$searchResults = getQueryResults($query);
 		}
@@ -89,7 +93,7 @@ while($row = mysqli_fetch_array($result)){
 		}
 		$sql = "SELECT C.plate_id, C.model, C.body, C.brand, C.color, C.year, C.status, OF.country, OF.city
 				FROM car C, office OF
-				WHERE C.office_id = OF.office_id
+				WHERE C.office_id = OF.office_id AND C.plate_id NOT IN (SELECT plate_id FROM reservation)
 				ORDER BY C.plate_id";
 		$result = $conn->query($sql);  //gets the data of the user with the given inputs
 		$plateArray = array();
@@ -129,7 +133,7 @@ while($row = mysqli_fetch_array($result)){
 		$cityArray = array_unique($cityArray);
 ?>
 		<p class="font16">Filter Search:</p>
-		<form action="customer.php" method="POST">
+		<form action="customer.php" method="POST" class="white-colour font20 black-background">
 			<label> model:</label>
 						<select name="searchedValModel">
 						<option selected="selected"></option>
@@ -205,9 +209,7 @@ while($row = mysqli_fetch_array($result)){
 						?>		
 						</select>
 			<input type="submit" name="search" value="filter">
-			<?php
-			$var = 11;?>
-		<table>
+		<table class="white-colour font20 black-background">
 			<tr>
 				<th>plate_id</th>
 				<th>model</th>
@@ -246,7 +248,7 @@ while($row = mysqli_fetch_array($result)){
 						?>		
 						</select>
 			<br>
-			<input type="submit" value="Reserve" name="chosen">
+			<input type="submit" value="Reserve" name="chosen" id="reserved">
 		</form>
 		<?php
 		
@@ -256,6 +258,7 @@ while($row = mysqli_fetch_array($result)){
 			FROM car,office
 			WHERE car.office_id = office.office_id AND car.plate_id = $searchedValPlate";
 			$finalResult = mysqli_query($conn,$car);
+			
 			?>
 			<table>
 			<tr>
@@ -280,16 +283,23 @@ while($row = mysqli_fetch_array($result)){
 				<td><?php echo $row["status"];?></td>
 				<td><?php echo $row["country"];?></td>
 				<td><?php echo $row["city"];?></td>
+				<?php $officeid = $row["office_id"];
+				$plateid = $row["plate_id"];
+				?>
 			</tr>
-			<?php endwhile;?>
+			<?php endwhile;
+			$reserve = "INSERT INTO `reservation` (`user_id`, `plate_id`, `office_id`, `reservation_date`, `paid`) VALUES
+			($id, $plateid, $officeid, date(CURRENT_TIMESTAMP), FALSE)";
+			$conn->query($reserve);
+			?>
 		</table>
+		<form method="POST">
+			<input type="submit" value="Proceed to checkout" name="checkout">
+		</form>
 		<?php
-		echo $sesEmail;
-		echo $id;
 		}
 		$conn->close();
 		?>
-
     </section>
 
 </body>
