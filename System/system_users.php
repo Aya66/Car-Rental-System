@@ -40,9 +40,21 @@
 		<?php
 
 		if (isset($_POST["search"])) {
-			$searchedValModel = $_POST["searchedValModel"];
-			$searchedValColor = $_POST["searchedValColor"];
-			$query = "SELECT `user_id`, `first_name`, `last_name`, `email`, `birthdate`, `gender`, `country`,`city` FROM user WHERE is_admin = 0";
+			$searchedValName = $_POST["searchedValName"];
+			if (isset($_POST["searchedValGender"])) {
+				$searchedValGender = $_POST["searchedValGender"];
+			}
+			else {
+				$searchedValGender = "";
+			}
+			$searchedValCountry = $_POST["searchedValCountry"];
+			$searchedValCity = $_POST["searchedValCity"];
+			$query = "	SELECT `user_id`, `first_name`, `last_name`, `email`, `birthdate`, `gender`, `country`,`city`
+						FROM user
+						WHERE is_admin = 0 AND (CONCAT(`first_name`, `last_name`, `email`) LIKE '%".$searchedValName."%'
+												AND CONCAT(`gender`) LIKE '%".$searchedValGender."%'
+												AND CONCAT(`country`) LIKE '%".$searchedValCountry."%'
+												AND CONCAT(`city`) LIKE '%".$searchedValCity."%')";
 			$searchResults = getQueryResults($query);
 		}
 		else {
@@ -78,16 +90,12 @@
 		
 		$result = $conn->query($sql);  //gets the data of the user with the given inputs
 		
-		$userArray = array();
-		$genderArray = array();
 		$countryArray = array();
 		$cityArray = array();
 		
 		if ($result->num_rows > 0) {
 
 			while ($row = $result->fetch_assoc()) {  // check if the data exists
-				$userArray[] = $row["user_id"];
-				$genderArray[] = $row["gender"];
 				$countryArray[] = $row["country"];
 				$cityArray[] = $row["city"];
 			}
@@ -97,8 +105,6 @@
 			echo "no cars exist";
 		}
 
-		$userArray = array_unique($userArray);
-		$firstArray = array_unique($firstArray);
 		$countryArray = array_unique($countryArray);
 		$cityArray = array_unique($cityArray);
 
@@ -107,8 +113,34 @@
 		<form action="system_users.php" method="POST">
 
 			<br>
-			<input type="text" name="searchedValModel" placeholder="Search here">
-			<input type="text" name="searchedValColor" placeholder="Search here">
+
+			<input type="text" name="searchedValName" placeholder="Search name or email">
+			
+			<label>M</label>
+			<input type="radio" name="searchedValGender" value="M">
+			<label>F</label>
+			<input type="radio" name="searchedValGender" value="F">
+
+			<label> Country:</label>
+			<select name="searchedValCountry">
+				<option selected="selected"></option>
+				<?php
+				foreach($countryArray as $item){
+					echo '<option value=' .$item. '>' .$item. '</option>';
+				}
+				?>
+			</select>
+
+			<label> City:</label>
+			<select name="searchedValCity">
+				<option selected="selected"></option>
+				<?php
+				foreach($cityArray as $item){
+					echo '<option value=' .$item. '>' .$item. '</option>';
+				}
+				?>
+			</select>
+
 			<input type="submit" name="search" value="Filter">
 			<br>
 
