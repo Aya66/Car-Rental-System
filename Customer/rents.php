@@ -73,6 +73,7 @@ if(isset($_POST["rents"])){
     <section class="center scrollbar">
 
 
+
         <?php
             $servername = "localhost";
             $username = "root";
@@ -81,24 +82,20 @@ if(isset($_POST["rents"])){
             $conn = new mysqli($servername, $username, $password, $dbname);  //creates the connection
             $sql = "SELECT *
             FROM `reservation`,`car`
-            WHERE user_id = $id AND paid = FALSE AND reservation.plate_id = car.plate_id";
+            WHERE user_id = $id AND paid = TRUE AND reservation.plate_id = car.plate_id";
             $result = mysqli_query($conn,$sql);
-            
-            if(isset($_POST["pay"])){
-                $paid = "UPDATE `reservation` SET paid = TRUE, rental_date = date(CURRENT_TIMESTAMP), return_date = DATE_ADD(date(CURRENT_TIMESTAMP),INTERVAL rent_days DAY) WHERE user_id = $id";
-                $conn->query($paid);
-            }
             $conn->close();
 
         ?>
-        <h1 class="login-text white-colour font30">Unpaid Reservations</h1>
+        <h1 class="login-text white-colour font30">Ongoing rentals</h1>
         <table id="customers">
             <tr>
                 <th class="font16 white-colour">Plate ID</th>
                 <th class="font16 white-colour">Model</th>
                 <th class="font16 white-colour">Reservation Date</th>
-                <th class="font16 white-colour">Rent duration(days)</th>
-                <th class="font16 white-colour">price/day</th>
+                <th class="font16 white-colour">Rent Duration(days)</th>
+                <th class="font16 white-colour">Rent Date</th>
+                <th class="font16 white-colour">Return Date</th>
                 <th class="font16 white-colour">price</th>
                 <!--<th class="font16 white-colour">Model</th>-->
             </tr>
@@ -109,34 +106,13 @@ if(isset($_POST["rents"])){
                 <td class="font16 white-colour"><?php echo $row["model"];?></td>
                 <td class="font16 white-colour"><?php echo $row["reservation_date"];?></td>
                 <td class="font16 white-colour"><?php echo $row["rent_days"];?></td>
-                <td class="font16 white-colour"><?php echo $row["price_day"];?></td>
+                <td class="font16 white-colour"><?php echo $row["rental_date"];?></td>
+                <td class="font16 white-colour"><?php echo $row["return_date"];?></td>
                 <td class="font16 white-colour"><?php echo $row["price_day"] * $row["rent_days"];?></td>
                 <?php $total_price = $total_price + $row["price_day"] * $row["rent_days"];?>
-                <!--<td><?php echo $row["body"];?></td>-->
             </tr>
             <?php endwhile;?>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td ></td>
-                <td class="font16 white-colour">Total price:<?php echo $total_price;?></td>
         </table>
-        <br>
-        <br>
-        <form method="POST" class="form-border">
-            <label>Payment Method</label>
-			<br>
-			<label class="font16 white-colour">Cash</label>
-            <input type="radio" name="method">
-            <br>
-			<label class="font16 white-colour">Credit Card</label>
-			<input type="radio" name="method">
-			<br>
-            <input type="password" placeholder="Enter Pin" class="reg-textbox">
-            <br>
-            <input class="white-colour buttons-size background-colour-button button-homepage radius-5" type="submit" value="Confirm Payment" name="pay" onclick="success()">
-        </form>
     </section>
 </body>
 </html>

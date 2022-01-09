@@ -19,6 +19,14 @@ while($row = mysqli_fetch_array($result)){
 if(isset($_POST["checkout"])){
 	header("Location: /car-rental-system/customer/checkout.php? id='$id'");
 }
+if(isset($_POST["rentCar"])){
+	header("Location: /car-rental-system/customer/customer.php? id='$id'");
+}
+if(isset($_POST["rents"])){
+	header("Location: /car-rental-system/customer/rents.php? id='$id'");
+}
+$sql = "DELETE FROM `reservation` WHERE return_date < date(CURRENT_TIMESTAMP)";
+$result = $conn->query($sql);
 ?>
 
 <html>
@@ -57,15 +65,27 @@ if(isset($_POST["checkout"])){
 
 	<nav class="nav-bar black-background">
 
+		<form method="POST">
+   			<button type="submit" name="rentCar" value="rentCar" class="btn-link navbar-first" >Cars</button>
+		</form>
+
+		<form method="POST">
+   			<button type="submit" name="checkout" value="checkout" class="btn-link navbar-second" >Checkout</button>
+		</form>
+
+        <form method="POST">
+   			<button type="submit" name="rents" value="rents" class="btn-link navbar-third" >Current Rentals</button>
+		</form>
+
 		<a href="/Car-Rental-System/logout.php">
         	<h2 class="font26 logout-margins white-colour">Logout</h2>
 		</a>
-
-		<h2 class="font26 title-margins white-colour">Car Rental System</h2>
     
-	</nav>
+    </nav>
 
-	<section class="scrollbar">
+    <section class="center scrollbar">
+
+
 
 <?php
 		if(isset($_POST["search"])){
