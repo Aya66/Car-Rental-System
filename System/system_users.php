@@ -35,7 +35,7 @@
     
     </nav>
 
-	<section class=" white-colour font20 scrollbar">
+	<section class="white-colour font20 scrollbar">
 
 		<?php
 
@@ -145,12 +145,12 @@
 			<br>
 
 			<br>
-			<table class="white-colour font20 black-background">
+			<table class="white-colour font20 black-background cool-table">
 
 				<tr>
-					<th>User ID</th>
-					<th>First Name</th>
-					<th>Last Name</th>
+					<th>UserID</th>
+					<th>FirstName</th>
+					<th>LastName</th>
 					<th>Email</th>
 					<th>Birthdate</th>
 					<th>Gender</th>

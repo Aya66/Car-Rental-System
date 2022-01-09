@@ -30,6 +30,8 @@ if ($input['action'] == 'edit') {
         $update_field.= "status='".$input['status']."'";
     } else if(isset($input['office_id'])) {
         $update_field.= "office_id='".$input['office_id']."'";
+    } else if(isset($input['price_day'])) {
+        $update_field.= "price_day='".$input['price_day']."'";
     }
 
     if($update_field && $input['plate_id']) {

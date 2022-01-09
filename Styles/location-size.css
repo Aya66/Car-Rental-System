@@ -175,3 +175,22 @@ body {
   font-weight: bold;
   font-size: 26px;
 }
+.cool-table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  }
+.cool-table td, .cool-table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  color: white;
+  font-weight: bold;
+}
+.cool-table tr:hover {background-color: grey;}
+.cool-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: black;
+  color: white;
+}

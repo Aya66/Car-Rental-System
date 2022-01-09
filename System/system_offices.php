@@ -35,7 +35,7 @@
     
     </nav>
 
-	<section class=" white-colour font20 scrollbar">
+	<section class="white-colour font20 scrollbar">
 
 		<?php
 
@@ -109,7 +109,7 @@
 
 			<br>
 			
-			<label> Office_ID:</label>
+			<label> OfficeID:</label>
 			<select name="searchedValOffice">
 				<option selected="selected"></option>
 				<?php
@@ -143,10 +143,10 @@
 			<br>
 
 			<br>
-			<table class="white-colour font20 black-background">
+			<table class="white-colour font20 black-background cool-table">
 
 				<tr>
-					<th>Office_ID</th>
+					<th>OfficeID</th>
 					<th>Country</th>
 					<th>City</th>
 				</tr>

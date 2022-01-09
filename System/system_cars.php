@@ -51,15 +51,26 @@
 			$searchedValYear = $_POST["searchedValYear"];
 			$searchedValStatus = $_POST["searchedValStatus"];
 			$searchedValOffice = $_POST["searchedValOffice"];
+			$searchedValPriceMin = $_POST["searchedValPriceMin"];
+			$searchedValPriceMax = $_POST["searchedValPriceMax"];
+			if ($searchedValPriceMin == ""){
+				$searchedValPriceMin = '0';
+			}
+			if ($searchedValPriceMax == ""){
+				$searchedValPriceMax = '99999';
+			}
+
 			$query = "	SELECT *
 						FROM car
-						WHERE CONCAT(`model`) LIKE '%".$searchedValModel."%'
+						WHERE price_day BETWEEN ".$searchedValPriceMin." AND ".$searchedValPriceMax."
+							AND CONCAT(`model`) LIKE '%".$searchedValModel."%'
 							AND CONCAT(`body`) LIKE '%".$searchedValBody."%'
 							AND CONCAT(`brand`) LIKE '%".$searchedValBrand."%'
 							AND CONCAT(`color`) LIKE '%".$searchedValColor."%'
 							AND CONCAT(`year`) LIKE '%".$searchedValYear."%'
 							AND CONCAT(`status`) LIKE '%".$searchedValStatus."%'
 							AND CONCAT(`office_id`) LIKE '%".$searchedValOffice."%'";
+			
 			$searchResults = getQueryResults($query);
 		}
 		else {
@@ -95,8 +106,8 @@
 			$newPlateID = $_POST["newPlateID"];
 
 			if (validatePlateID($newPlateID)) {
-				$sql = "INSERT INTO car (`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `office_id`) VALUES
-				($newPlateID, '', '', '', '', '', '', NULL)";
+				$sql = "INSERT INTO car (`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `office_id`, `price_day`) VALUES
+				($newPlateID, '', '', '', '', '', '', NULL, '')";
 			
 				if ($conn->query($sql) === TRUE) {
 					echo "New record created successfully";
@@ -179,7 +190,7 @@
 
 			<br>
 			
-			<label> model:</label>
+			<label>Model:</label>
 			<select name="searchedValModel">
 				<option selected="selected"></option>
 				<?php
@@ -189,7 +200,7 @@
 				?>
 			</select>
 						
-			<label>body:</label>
+			<label>Body:</label>
 			<select name="searchedValBody">
 				<option selected="selected"></option>
 				<?php
@@ -199,7 +210,7 @@
 				?>
 			</select>
 						
-			<label>brand:</label>
+			<label>Brand:</label>
 			<select name="searchedValBrand">
 				<option selected="selected"></option>
 				<?php
@@ -209,7 +220,7 @@
 				?>
 			</select>
 
-			<label>color:</label>
+			<label>Color:</label>
 			<select name="searchedValColor">
 				<option selected="selected"></option>
 				<?php
@@ -219,7 +230,7 @@
 				?>
 			</select>
 
-			<label>year:</label>
+			<label>Year:</label>
 			<select name="searchedValYear">
 				<option selected="selected"></option>
 				<?php
@@ -229,7 +240,7 @@
 				?>
 			</select>
 
-			<label>status:</label>
+			<label>Status:</label>
 			<select name="searchedValStatus">
 				<option selected="selected"></option>
 				<?php
@@ -249,7 +260,14 @@
 				?>
 			</select>
 
+			<label>Price/Day:</label>
+			<input type="number" name="searchedValPriceMin" placeholder="From">
+			<input type="number" name="searchedValPriceMax" placeholder="To">
+
 			<input type="submit" name="search" value="Filter">
+
+			<br>
+			<br>
 			<input type="text" name="newPlateID" placeholder="New Car Plate ID">
 			<input type="submit" name="add" value="Add New Car">
 			<br>
@@ -257,18 +275,19 @@
 		</form>
 
 		
-		<table id="data_table" class="white-colour font20 black-background">
+		<table id="data_table" class="white-colour font20 black-background cool-table">
 
 			<thead>
 				<tr>
-					<th>plate_id</th>
-					<th>model</th>
-					<th>body</th>
-					<th>brand</th>
-					<th>color</th>
-					<th>year</th>
-					<th>status</th>
-					<th>office</th>
+					<th>PlateID</th>
+					<th>Model</th>
+					<th>Body</th>
+					<th>Brand</th>
+					<th>Color</th>
+					<th>Year</th>
+					<th>Status</th>
+					<th>Office</th>
+					<th>Price/Day</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -283,6 +302,7 @@
 					<td><?php echo $row['year'];?></td>
 					<td><?php echo $row['status']?></td>
 					<td><?php echo $row['office_id'];?></td>
+					<td><?php echo $row['price_day'];?></td>
 				
 				</tr>
 				<?php endwhile; ?>
