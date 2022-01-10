@@ -56,7 +56,7 @@
 						WHERE R.user_id=U.user_id AND R.plate_id=C.plate_id AND R.office_id=O.office_id
 							AND CONCAT(R.`user_id`) LIKE '%".$searchedValUser."%'
 							AND CONCAT(R.`plate_id`) LIKE '%".$searchedValCar."%'
-							AND R.`reservation_date` BETWEEN ".$searchedValDateMin." AND ".$searchedValDateMax."
+							AND R.`reservation_date` BETWEEN '".$searchedValDateMin."' AND '".$searchedValDateMax."'
 						ORDER BY R.reservation_id";
 			$searchResults = getQueryResults($query);
 		}
