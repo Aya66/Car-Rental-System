@@ -37,6 +37,8 @@ $result = $conn->query($sql);
 	<link rel="stylesheet" href="/Car-Rental-System/Styles/colours.css">
     <link rel="stylesheet" href="/Car-Rental-System/Styles/location-size.css">
     <link rel="stylesheet" href="/Car-Rental-System/Styles/fonts.css">
+	<!-- Scripts -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 	<script>
 		function emptyValidate() {  //checks if there are any empty fields
@@ -73,6 +75,169 @@ $result = $conn->query($sql);
 		color: white;
 		}
 	</style>
+
+<script type="text/javascript">
+		$(document).ready(function(){
+
+			$("#ajaxdata").load("carRecords.php");
+
+			//here
+			var selectedModel;
+			var selectedBody;
+			var selectedBrand;
+			var selectedColor;
+			var selectedYear;
+			var selectedStatus;
+			var selectedCountry;
+			var selectedCity;
+
+			$("#ajaxform1").change(function(){
+
+				selectedModel=$(this).val();
+				
+				$("#ajaxdata").load("carRecordsFiltered.php",{
+					model: selectedModel,
+					body: selectedBody,
+					brand: selectedBrand,
+					color: selectedColor,
+					year: selectedYear,
+					status: selectedStatus,
+					country: selectedCountry,
+					city: selectedCity
+				});
+			});
+
+
+			
+			$("#ajaxform2").change(function(){
+
+				selectedBody=$(this).val();
+
+				$("#ajaxdata").load("carRecordsFiltered.php",{
+					model: selectedModel,
+					body: selectedBody,
+					brand: selectedBrand,
+					color: selectedColor,
+					year: selectedYear,
+					status: selectedStatus,
+					country: selectedCountry,
+					city: selectedCity
+				});
+			});
+
+
+
+			$("#ajaxform3").change(function(){
+
+				selectedBrand=$(this).val();
+
+				$("#ajaxdata").load("carRecordsFiltered.php",{
+					model: selectedModel,
+					body: selectedBody,
+					brand: selectedBrand,
+					color: selectedColor,
+					year: selectedYear,
+					status: selectedStatus,
+					country: selectedCountry,
+					city: selectedCity
+				});
+			});
+
+
+
+			$("#ajaxform4").change(function(){
+
+				selectedColor=$(this).val();
+
+				$("#ajaxdata").load("carRecordsFiltered.php",{
+					model: selectedModel,
+					body: selectedBody,
+					brand: selectedBrand,
+					color: selectedColor,
+					year: selectedYear,
+					status: selectedStatus,
+					country: selectedCountry,
+					city: selectedCity
+				});
+			});
+
+
+
+			$("#ajaxform5").change(function(){
+
+				selectedYear=$(this).val();
+
+				$("#ajaxdata").load("carRecordsFiltered.php",{
+					model: selectedModel,
+					body: selectedBody,
+					brand: selectedBrand,
+					color: selectedColor,
+					year: selectedYear,
+					status: selectedStatus,
+					country: selectedCountry,
+					city: selectedCity
+				});
+			});
+
+
+
+			$("#ajaxform6").change(function(){
+
+				selectedStatus=$(this).val();
+
+				$("#ajaxdata").load("carRecordsFiltered.php",{
+					model: selectedModel,
+					body: selectedBody,
+					brand: selectedBrand,
+					color: selectedColor,
+					year: selectedYear,
+					status: selectedStatus,
+					country: selectedCountry,
+					city: selectedCity
+				});
+			});
+
+
+			$("#ajaxform7").change(function(){
+
+				selectedCountry=$(this).val();
+
+				$("#ajaxdata").load("carRecordsFiltered.php",{
+					model: selectedModel,
+					body: selectedBody,
+					brand: selectedBrand,
+					color: selectedColor,
+					year: selectedYear,
+					status: selectedStatus,
+					country: selectedCountry,
+					city: selectedCity
+				});
+			});
+
+			$("#ajaxform8").change(function(){
+
+				selectedCity=$(this).val();
+
+				$("#ajaxdata").load("carRecordsFiltered.php",{
+					model: selectedModel,
+					body: selectedBody,
+					brand: selectedBrand,
+					color: selectedColor,
+					year: selectedYear,
+					status: selectedStatus,
+					country: selectedCountry,
+					city: selectedCity
+				});
+			});
+			
+			//here
+
+			$("#refresh").click(function(){
+				$("#ajaxdata").load("carRecords.php");
+			});
+
+		});
+	</script>
 </head>
 
 <body>
@@ -102,45 +267,6 @@ $result = $conn->query($sql);
 
 
 <?php
-		if(isset($_POST["search"])){
-			$searchedValModel = $_POST["searchedValModel"];
-			$searchedValBody = $_POST["searchedValBody"];
-			$searchedValBrand = $_POST["searchedValBrand"];
-			$searchedValColor = $_POST["searchedValColor"];
-			$searchedValYear = $_POST["searchedValYear"];
-			$searchedValStatus = $_POST["searchedValStatus"];
-			$searchedValCountry = $_POST["searchedValCountry"];
-			$searchedValCity = $_POST["searchedValCity"];
-			$query = "SELECT `plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`,`price_day` FROM `car`,`office` WHERE 
-			car.office_id = office.office_id 
-			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValModel."%'
-			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValBody."%'
-			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValBrand."%'
-			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValColor."%'
-			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValYear."%'
-			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValStatus."%'
-			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValCountry."%'
-			AND CONCAT(`plate_id`, `model`, `body`, `brand`, `color`, `year`, `status`, `country`, `city`) LIKE '%".$searchedValCity."%'
-			AND car.plate_id NOT IN (SELECT plate_id FROM reservation)";
-			$searchResults = getQueryResults($query);
-		}
-		else{
-			$query ="SELECT C.plate_id, C.model, C.body, C.brand, C.color, C.year, C.status,C.price_day, OF.country, OF.city
-					 FROM car C, office OF
-					 WHERE C.office_id = OF.office_id AND C.plate_id NOT IN (SELECT plate_id FROM reservation)
-					 ORDER BY C.plate_id";
-			$searchResults = getQueryResults($query);
-		}
-		function getQueryResults($query){
-			$servername = "localhost";
-			$username = "root";
-			$password = "";
-			$dbname = "carrentalsystem";
-			$conn = mysqli_connect($servername, $username, $password, $dbname);  //creates the connection
-			$filteredResult = mysqli_query($conn,$query);
-			return $filteredResult;
-			
-		}
 		$servername = "localhost";
 		$username = "root";
 		$password = "";
@@ -190,9 +316,9 @@ $result = $conn->query($sql);
 		$cityArray = array_unique($cityArray);
 ?>
 		<br>
-		<form action="customer.php" method="POST" class="white-colour bold font20">
+		<form method="POST" class="white-colour bold font20">
 			<label>  Model:  </label>
-						<select name="searchedValModel">
+						<select id="ajaxform1" name="searchedValModel">
 						<option selected="selected"></option>
 						<?php
 						foreach($modelArray as $item){
@@ -202,7 +328,7 @@ $result = $conn->query($sql);
 						</select>
 						
 			<label>  Body:  </label>
-						<select name="searchedValBody">
+						<select id="ajaxform2" name="searchedValBody">
 						<option selected="selected"></option>
 						<?php
 						foreach($bodyArray as $item){
@@ -212,7 +338,7 @@ $result = $conn->query($sql);
 						</select>
 						
 			<label>  Brand:  </label>
-						<select name="searchedValBrand">
+						<select id="ajaxform3" name="searchedValBrand">
 						<option selected="selected"></option>
 						<?php
 						foreach($brandArray as $item){
@@ -221,7 +347,7 @@ $result = $conn->query($sql);
 						?>		
 						</select>
 			<label>  Color:  </label>
-						<select name="searchedValColor">
+						<select id="ajaxform4" name="searchedValColor">
 						<option selected="selected"></option>
 						<?php
 						foreach($colorArray as $item){
@@ -230,7 +356,7 @@ $result = $conn->query($sql);
 						?>		
 						</select>
 			<label>  Year:  </label>
-						<select name="searchedValYear">
+						<select id="ajaxform5" name="searchedValYear">
 						<option selected="selected"></option>
 						<?php
 						foreach($yearArray as $item){
@@ -239,7 +365,7 @@ $result = $conn->query($sql);
 						?>		
 						</select>
 			<label>  Status:  </label>
-						<select name="searchedValStatus">
+						<select id="ajaxform6" name="searchedValStatus">
 						<option selected="selected"></option>
 						<?php
 						foreach($statusArray as $item){
@@ -248,7 +374,7 @@ $result = $conn->query($sql);
 						?>		
 						</select>
 			<label>  Country:  </label>
-						<select name="searchedValCountry">
+						<select id="ajaxform7" name="searchedValCountry">
 						<option selected="selected"></option>
 						<?php
 						foreach($countryArray as $item){
@@ -257,7 +383,7 @@ $result = $conn->query($sql);
 						?>		
 						</select>
 			<label>  City:  </label>
-						<select name="searchedValCity">
+						<select id="ajaxform8" name="searchedValCity">
 						<option selected="selected"></option>
 						<?php
 						foreach($cityArray as $item){
@@ -265,38 +391,13 @@ $result = $conn->query($sql);
 						}
 						?>		
 						</select>
-			<input type="submit" name="search" value="filter">
-		<br>
-		<br>
-		<table id="customers">
-			<tr>
-				<th>plate_id</th>
-				<th>model</th>
-				<th>body</th>
-				<th>brand</th>
-				<th>color</th>
-				<th>year</th>
-				<th>status</th>
-				<th>country</th>
-				<th>city</th>
-				<th>price/day</th>
-			</tr>
-			<?php while($row = mysqli_fetch_array($searchResults)):?>
-			<tr>
-				<td><?php echo $row["plate_id"];?></td>
-				<td><?php echo $row["model"];?></td>
-				<td><?php echo $row["body"];?></td>
-				<td><?php echo $row["brand"];?></td>
-				<td><?php echo $row["color"];?></td>
-				<td><?php echo $row["year"];?></td>
-				<td><?php echo $row["status"];?></td>
-				<td><?php echo $row["country"];?></td>
-				<td><?php echo $row["city"];?></td>
-				<td><?php echo $row["price_day"];?></td>
-			</tr>
 
-			<?php endwhile;?>
-		</table>
+		<br>
+		<br>
+		<div id="ajaxdata">
+		
+		</div>
+		
 		<form method="POST" class="white-colour bold font20">
 			<br>
 			<label>Enter the desired car's plate ID  </label>
