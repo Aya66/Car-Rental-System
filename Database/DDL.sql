@@ -54,4 +54,5 @@ ADD FOREIGN KEY (office_id) REFERENCES office(office_id);
 
 ALTER TABLE reservation
 ADD FOREIGN KEY (user_id) REFERENCES user(user_id),
-ADD FOREIGN KEY (plate_id) REFERENCES car(plate_id);
+ADD FOREIGN KEY (plate_id) REFERENCES car(plate_id),
+ADD FOREIGN KEY (office_id) REFERENCES office(office_id);
