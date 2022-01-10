@@ -54,10 +54,9 @@
 			$query = "	SELECT *, U.country AS user_country, U.city AS user_city, O.country AS office_country, O.city AS office_city
 						FROM reservation R, user U, car C, office O
 						WHERE R.user_id=U.user_id AND R.plate_id=C.plate_id AND R.office_id=O.office_id
-							AND CONCAT(`R.user_id`) LIKE '%".$searchedValUser."%'
-							AND CONCAT(`R.plate_id`) LIKE '%".$searchedValCar."%'
-							AND R.reservation_date >= ".$searchedValDateMin."
-							AND R.reservation_date <= ".$searchedValDateMax."
+							AND CONCAT(R.`user_id`) LIKE '%".$searchedValUser."%'
+							AND CONCAT(R.`plate_id`) LIKE '%".$searchedValCar."%'
+							AND R.`reservation_date` BETWEEN ".$searchedValDateMin." AND ".$searchedValDateMax."
 						ORDER BY R.reservation_id";
 			$searchResults = getQueryResults($query);
 		}
@@ -156,9 +155,9 @@
 			</select>
 
 			<label>From:</label>
-			<input type="date" name="searchedValDateMin">
+			<input type="date" id="searchedValDateMin" name="searchedValDateMin">
 			<label>To:</label>
-			<input type="date" name="searchedValDateMax">
+			<input type="date" id="searchedValDateMax" name="searchedValDateMax">
 
 			<input type="submit" name="search" value="Filter">
 			<br>
