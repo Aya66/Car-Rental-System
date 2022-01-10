@@ -16,7 +16,7 @@ if(isset($_POST["rents"])){
 ?>
 <html>
 <head>
-    <title>Checkout</title>
+    <title>Rents</title>
     <!--Style sheets-->
     <link rel="stylesheet" href="/Car-Rental-System/Styles/colours.css">
     <link rel="stylesheet" href="/Car-Rental-System/Styles/location-size.css">
